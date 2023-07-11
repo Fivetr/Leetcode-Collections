@@ -1,12 +1,12 @@
 "use client";
 
-import { HomeHeader, ProblemContainer, Footer } from "@/components";
+import { HomeHeader, WorkSpaceContainer, Footer } from "@/components";
 
 export default function Home({ params }: { params: { id: string } }) {
   return (
     <main className="min-h-screen">
       <HomeHeader problemPage={true} />
-      <ProblemContainer />
+      <WorkSpaceContainer />
     </main>
   );
 }

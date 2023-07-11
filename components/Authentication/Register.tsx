@@ -17,15 +17,18 @@ function Register() {
     name: "",
   });
 
+  // firebase create account hook
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(firebase_auth);
 
+  // record user input
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRegister((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // create a new user in firebase
     try {
       const newUser = await createUserWithEmailAndPassword(
         Register.email,
@@ -39,6 +42,7 @@ function Register() {
     }
   };
 
+  // display  custom error message
   useEffect(() => {
     if (error) {
       toast.error(error.message);
@@ -52,6 +56,7 @@ function Register() {
     >
       <h2 className="text-2xl font-medium">Register</h2>
       <div>
+        {/* user name input */}
         <label htmlFor="text" className="mb-2 block text-sm font-medium">
           Name
         </label>
@@ -65,6 +70,7 @@ function Register() {
           required
         />
       </div>
+      {/* email input */}
       <div>
         <label htmlFor="email" className="mb-2 block text-sm font-medium">
           Email
@@ -79,6 +85,7 @@ function Register() {
           required
         />
       </div>
+      {/* password input */}
       <div>
         <label htmlFor="email" className="mb-2 block text-sm font-medium">
           Password
@@ -93,11 +100,13 @@ function Register() {
           required
         />
       </div>
+      {/* submit button */}
       <div className="pb-5">
         <button
           type="submit"
           className="btn w-full text-center font-medium hover:scale-105"
         >
+          {/* render loading anamiation if is loading */}
           {loading ? (
             <div className="flex items-center justify-center gap-3">
               <div className="animate-spin">

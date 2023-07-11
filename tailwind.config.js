@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       screens: {
         short: { raw: "(max-height: 640px)" },
+        height: { raw: "(max-height: 900px)" },
       },
     },
   },

@@ -7,17 +7,20 @@ import { toast } from "react-toastify";
 
 function ForgetPassword() {
   const [Email, setEmail] = useState("");
+  // firebase reset email hook
   const [sendPasswordResetEmail, sending, error] =
     useSendPasswordResetEmail(firebase_auth);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // send an email notification if successful
     const success = await sendPasswordResetEmail(Email);
     if (success) {
       toast.success("Email sent", { position: "top-left", autoClose: 2000 });
     }
   };
 
+  // display custom error message
   useEffect(() => {
     if (error) {
       switch (error.message) {
@@ -42,6 +45,7 @@ function ForgetPassword() {
     >
       <h2 className="text-2xl font-medium">Reset Password</h2>
       <p>Enter your email address below to reset your password</p>
+      {/* email input */}
       <div>
         <label htmlFor="email" className="mb-2 block text-sm font-medium">
           Email
@@ -56,10 +60,12 @@ function ForgetPassword() {
         />
       </div>
       <div className="pb-5">
+        {/* submit button */}
         <button
           type="submit"
           className="btn w-full text-center font-medium hover:scale-105"
         >
+          {/* render loading anamiation if is loading */}
           {sending ? (
             <div className="flex items-center justify-center gap-3">
               <div className="animate-spin">

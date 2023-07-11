@@ -17,22 +17,26 @@ function AuthLayOut() {
 
   return (
     <>
+      {/* background */}
       <div
-        className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-60"
+        className="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-60"
         onClick={closeLayout}
       ></div>
-      <div className="w-[20rem] sm:w-[26rem] short:w-[18rem] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex justify-center items-center">
-        <div className="relative w-full h-full mx-auto flex items-center justify-center">
-          <div className="bg-white rounded-lg shadow relative w-full bg-gradient-to-b from-cyan-100 via-cyan-200 to-cyan-400 mx-6">
+      {/* form container */}
+      <div className="absolute left-[50%] top-[50%] flex w-[20rem] translate-x-[-50%] translate-y-[-50%] items-center justify-center sm:w-[26rem] short:w-[18rem]">
+        <div className="relative mx-auto flex h-full w-full items-center justify-center">
+          <div className="relative mx-6 w-full rounded-lg bg-white bg-gradient-to-b from-cyan-100 via-cyan-200 to-cyan-400 shadow">
             <div className="flex justify-end p-2">
+              {/* close button */}
               <button
                 type="button"
-                className="bg-transparent rounded-lg text-md p-1 ml-auto inline-flex items-center"
+                className="text-md ml-auto inline-flex items-center rounded-lg bg-transparent p-1"
                 onClick={() => dispatch(close())}
               >
-                <AiOutlineClose className="w-5 h-5 hover:scale-150 duration-300" />
+                <AiOutlineClose className="h-5 w-5 duration-300 hover:scale-150" />
               </button>
             </div>
+            {/* render different form based on auth state; login | register | forgetpassword */}
             {auth.type === "login" ? (
               <Login />
             ) : auth.type === "register" ? (

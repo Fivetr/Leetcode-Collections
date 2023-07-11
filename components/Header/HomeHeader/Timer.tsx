@@ -33,6 +33,7 @@ function Timer() {
 
     return () => clearInterval(intervalId);
   }, [TimerOpen]);
+
   return (
     <div>
       {TimerOpen ? (

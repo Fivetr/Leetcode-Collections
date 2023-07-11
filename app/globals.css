@@ -21,7 +21,7 @@ body {
 }
 
 .problem_btn {
-  @apply inline-block cursor-pointer rounded-md border-2 border-cyan-200 bg-cyan-100 px-3 py-1 font-semibold no-underline shadow-md shadow-cyan-500 duration-500 hover:scale-110 hover:border-sky-400 hover:bg-cyan-400;
+  @apply inline-block cursor-pointer rounded-md border-2 px-3 py-1 font-semibold no-underline shadow-md shadow-cyan-500 duration-500 hover:scale-110;
 }
 
 .table_problem {
@@ -32,10 +32,14 @@ body {
   @apply w-0 px-6 py-3 text-center font-medium;
 }
 
-.cm-scroller,
-.cm-gutters {
-  background-color: #282828 !important;
+.DescriptionNav {
+  @apply cursor-pointer font-bold text-gray-400  hover:text-black;
 }
+
+.testcase_btn {
+  @apply relative cursor-pointer items-center whitespace-nowrap rounded-lg bg-cyan-400 px-3 py-1 text-[.9rem] font-medium text-white transition-all hover:bg-cyan-600;
+}
+
 .cm-focused {
   outline: none !important;
 }
@@ -46,7 +50,7 @@ body {
 }
 
 .gutter {
-  background-color: hsla(0, 1%, 35%, 0.07);
+  background-color: #eaeaea;
   background-repeat: no-repeat;
   background-position: 50%;
 }
@@ -77,20 +81,4 @@ code {
   background-color: hsla(0, 0%, 59%, 0.07);
   border-color: rgba(99, 100, 101, 0.12);
   color: black;
-}
-
-.example-card pre {
-  background-color: hsla(0, 0%, 59%, 0.07);
-  border-color: rgba(99, 100, 101, 0.12);
-  border-radius: 0.5rem;
-  color: black;
-  font-size: 0.98rem;
-  line-height: 1.25rem;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
-  padding: 1rem;
-  white-space: pre-wrap;
-}
-.example-card pre strong {
-  font-size: 1rem;
 }

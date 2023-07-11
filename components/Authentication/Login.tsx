@@ -18,14 +18,19 @@ function Login() {
     password: "",
   });
 
+  // firebase authentication hook
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(firebase_auth);
 
+  // record user input
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // invoke firebase authentication
+    // redirect to home page if authentication successful
     try {
       const user = await signInWithEmailAndPassword(
         Input.email,
@@ -38,6 +43,7 @@ function Login() {
     }
   };
 
+  // display custom error message
   useEffect(() => {
     if (error) {
       switch (error.message) {
@@ -52,15 +58,14 @@ function Login() {
       }
     }
   }, [error]);
-  console.log(user, "user");
 
-  console.log(Input);
   return (
     <form
       className="space-y-6 px-6 pt-2 short:space-y-2"
       onSubmit={handleSubmit}
     >
       <h2 className="text-2xl font-medium"> Sign In</h2>
+      {/* email Input */}
       <div>
         <label htmlFor="email" className="mb-2 block text-sm font-medium">
           Email
@@ -75,6 +80,7 @@ function Login() {
           onChange={handleChange}
         />
       </div>
+      {/* password Input */}
       <div>
         <label htmlFor="email" className="mb-2 block text-sm font-medium">
           Password
@@ -89,10 +95,12 @@ function Login() {
           onChange={handleChange}
         />
       </div>
+      {/* login button */}
       <button
         type="submit"
         className="btn w-full text-center font-medium hover:scale-105"
       >
+        {/* render loading anamiation if is loading */}
         {loading ? (
           <div className="flex items-center justify-center gap-3">
             <div className="animate-spin">
@@ -104,6 +112,7 @@ function Login() {
           <h3>Login</h3>
         )}
       </button>
+      {/* register and forgot password navigate button */}
       <div className="md:text-md flex justify-evenly gap-2 pb-5 text-sm">
         <button
           className="btn hover:scale-105"

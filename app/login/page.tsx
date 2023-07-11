@@ -16,6 +16,7 @@ export default function Page() {
   const [Page, setPage] = useState(true);
   const router = useRouter();
 
+  // if user is authenticated then this page will not be shown
   useEffect(() => {
     if (user) {
       router.push("/");
@@ -43,7 +44,8 @@ export default function Page() {
             Sign In
           </button>
         </div>
-        {auth.isOpen && <AuthLayOut />}
+        {/* check if user clicked the sign in button */}
+        {auth.isOpen ? <AuthLayOut /> : null}
         <div className="h-[1rem] bg-gradient-to-r from-cyan-50 via-sky-200 to-sky-300"></div>
       </main>
       <Footer />
