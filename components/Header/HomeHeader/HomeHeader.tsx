@@ -6,7 +6,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { firebase_auth } from "../../../firebase/firebase";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { AiOutlineUnorderedList } from "react-icons/ai";
+import ProblemList from "./ProblemList";
 import Timer from "./Timer";
 
 type HomeHeaderPros = {
@@ -31,11 +31,7 @@ function HomeHeader({ problemPage }: HomeHeaderPros) {
           {/* render problem navagation if currently in problem work space page */}
           {problemPage ? (
             <div className="flex flex-1 cursor-pointer items-center justify-center gap-2 px-2 py-2">
-              {/* problem list */}
-              <div className="mr-3 flex items-center justify-center gap-1 rounded-md px-3 py-[.18rem]  hover:bg-gray-100">
-                <AiOutlineUnorderedList />
-                <p className="text-sm font-semibold">Problem List</p>
-              </div>
+              <ProblemList />
 
               {/* problem navigate icon*/}
               <div className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-lg border p-2 duration-300 hover:bg-gray-100">

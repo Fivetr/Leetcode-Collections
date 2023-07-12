@@ -9,8 +9,14 @@ import { javascript } from "@codemirror/lang-javascript";
 import CodeEditorConsoleContainer from "./CodeEditorConsoleContainer";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
+import { Example } from "@/types";
 
-function CodeEditor() {
+type CodeEditorProps = {
+  startercode: string;
+  examples: Example[];
+};
+
+function CodeEditor({ startercode, examples }: CodeEditorProps) {
   const ConsoleOpen = useSelector(
     (state: RootState) => state.ConsoleReduce.value
   );
@@ -34,20 +40,20 @@ function CodeEditor() {
             >
               <div className="w-full overflow-auto rounded-b-[5px]  bg-white">
                 <CodeMirror
-                  value="const a = 1;"
+                  value={startercode}
                   theme={githubLight}
                   extensions={[javascript()]}
                   style={{ fontSize: 14 }}
                 />
               </div>
-              <CodeEditorConsoleContainer />
+              <CodeEditorConsoleContainer examples={examples} />
             </Split>
           ) : (
             // stack the work space with codeMirror & console footer
             <div className="relative flex h-[calc(100vh-94px)] flex-col justify-between">
               <div className="h-[calc(98.5%-30px)] w-full overflow-auto rounded-b-[5px] bg-white">
                 <CodeMirror
-                  value="const a = 1;"
+                  value={startercode}
                   theme={githubLight}
                   extensions={[javascript()]}
                   style={{ fontSize: 14 }}

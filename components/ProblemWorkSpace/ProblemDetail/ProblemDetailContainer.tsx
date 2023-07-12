@@ -3,8 +3,19 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import ProblemDescription from "./ProblemDescription";
 import ProblemSolution from "./ProblemSolution";
+import { Example, Solution } from "@/types";
 
-function ProblemDetailContainer() {
+type ProblemDetailContainerProps = {
+  constrain: string;
+  difficulty: string;
+  examples: Example[];
+  title: string;
+  problemStatement: string;
+  category: string;
+  solution: Solution;
+};
+
+function ProblemDetailContainer(param: ProblemDetailContainerProps) {
   const [DetailOptions, setDetailOptions] = useState("Description");
   const NavBarOptions = ["Description", "Solution"];
 
@@ -41,9 +52,16 @@ function ProblemDetailContainer() {
         <div className="w-[.4rem] bg-[#eaeaea]"></div>
         {/* render the context based on the navbar */}
         {DetailOptions === "Description" ? (
-          <ProblemDescription />
+          <ProblemDescription
+            constrain={param.constrain}
+            difficulty={param.difficulty}
+            examples={param.examples}
+            title={param.title}
+            problemStatement={param.problemStatement}
+            category={param.category}
+          />
         ) : (
-          <ProblemSolution />
+          <ProblemSolution solution={param.solution} />
         )}
       </div>
     </div>
