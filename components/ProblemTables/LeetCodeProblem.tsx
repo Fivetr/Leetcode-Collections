@@ -1,6 +1,6 @@
-"user client";
+"use client";
+
 import React from "react";
-import { Problems } from "../../leetcode_problems/problems";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import { BsCheckCircle } from "react-icons/bs";
@@ -8,9 +8,20 @@ import Link from "next/link";
 import { AiFillYoutube } from "react-icons/ai";
 import { IoClose } from "react-icons/io5";
 import YouTube from "react-youtube";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
+import { firestore } from "@/firebase/firebase";
+import { problem_MetaData } from "@/types";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { firebase_auth } from "@/firebase/firebase";
 
-function LeetCodeProblem() {
+type LeetCodeProblemProps = {
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+function LeetCodeProblem({ setLoading }: LeetCodeProblemProps) {
+  const [user] = useAuthState(firebase_auth);
+
   const currentCategory = useSelector(
     (state: RootState) => state.CurrentCategory.value
   );
@@ -20,115 +31,106 @@ function LeetCodeProblem() {
     videolink: "",
   });
 
+  const Problems = ((
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
+    const [problems, setproblems] = useState<problem_MetaData[]>([]);
+    useEffect(() => {
+      const getProblem = async () => {
+        setLoading(true);
+        const querySnapshot = await getDocs(collection(firestore, "problems"));
+        const tmp: problem_MetaData[] = [];
+        querySnapshot.forEach((doc) => {
+          tmp.push({ id: doc.id, ...doc.data() } as problem_MetaData);
+        });
+        setproblems(tmp);
+        setLoading(false);
+      };
+      getProblem();
+    }, []);
+    return problems;
+  })(setLoading);
+
+  const SolvedProblems = (() => {
+    const [problems, setproblems] = useState<string[]>([]);
+    const [user] = useAuthState(firebase_auth);
+    useEffect(() => {
+      const getProblem = async () => {
+        setLoading(true);
+        const userRef = doc(firestore, "users", user!.uid);
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          setproblems(userDoc.data()!.solvedProblems);
+        }
+      };
+      if (user) getProblem();
+    }, [user]);
+    return problems;
+  })();
+
   return (
     <>
       <tbody>
-        {currentCategory === "All"
-          ? Problems.map((value) => {
-              return value.problems.map(
-                ({ id, title, difficulty, videolink }) => {
-                  return (
-                    <tr key={id} className=" w-full border-b">
-                      {/* problem status */}
-                      <th className="table_problem whitespace-nowrap">
-                        <div className="flex items-center justify-center">
-                          <BsCheckCircle fontSize={"15"} width="18" />
-                        </div>
-                      </th>
-                      {/* problem title */}
-                      <td className="table_problem cursor-pointer font-extrabold hover:text-blue-400">
-                        <Link href={`/leetcode-problems/${id}`}>{title}</Link>
-                      </td>
-                      {/* problem difficulty */}
-                      <td
-                        className={`table_problem font-extrabold ${
-                          difficulty === "Easy"
-                            ? "text-green-600"
-                            : difficulty === "Medium"
-                            ? "text-yellow-600"
-                            : "text-red-600"
-                        }`}
-                      >
-                        {difficulty}
-                      </td>
-                      {/* problem category */}
-                      <td className="table_problem">{value.category}</td>
-                      {/* youtube solution link */}
-                      <td className="table_problem items-center">
-                        {videolink ? (
-                          <div className="flex w-full cursor-pointer items-center justify-center text-red-600 duration-300 hover:scale-125">
-                            <AiFillYoutube
-                              fontSize={30}
-                              onClick={() => {
-                                setYoutubeSolution({
-                                  isOpen: true,
-                                  videolink: videolink,
-                                });
-                              }}
-                            />
-                          </div>
-                        ) : (
-                          <p>Missing</p>
-                        )}
-                      </td>
-                    </tr>
-                  );
-                }
-              );
-            })
-          : // does not include category column
-            Problems.filter((value) => {
-              return value.category === currentCategory;
-            }).map((value) => {
-              return value.problems.map(
-                ({ id, title, difficulty, videolink }) => {
-                  return (
-                    <tr key={id} className=" border-b">
-                      {/* problem status */}
-                      <th className="table_problem">
-                        <div className="flex items-center justify-center">
-                          <BsCheckCircle fontSize={"15"} width="18" />
-                        </div>
-                      </th>
-                      {/* problem title */}
-                      <th className="table_problem cursor-pointer font-extrabold hover:text-blue-400">
-                        <Link href={`/leetcode-problems/${id}`}>{title}</Link>
-                      </th>
-                      {/* problem difficulty */}
-                      <th
-                        className={`table_problem font-extrabold ${
-                          difficulty === "Easy"
-                            ? "text-green-600"
-                            : difficulty === "Medium"
-                            ? "text-yellow-600"
-                            : "text-red-600"
-                        }`}
-                      >
-                        {difficulty}
-                      </th>
-                      {/* youtube solution link */}
-                      <th className="table_problem">
-                        {videolink ? (
-                          <div className="flex w-full cursor-pointer items-center justify-center text-red-600 duration-300 hover:scale-125">
-                            <AiFillYoutube
-                              fontSize={30}
-                              onClick={() => {
-                                setYoutubeSolution({
-                                  isOpen: true,
-                                  videolink: videolink,
-                                });
-                              }}
-                            />
-                          </div>
-                        ) : (
-                          <p>Missing</p>
-                        )}
-                      </th>
-                    </tr>
-                  );
-                }
-              );
-            })}
+        {Problems.filter((value) => {
+          return value.category === currentCategory;
+        })
+          .sort((a, b) => {
+            return a.rank - b.rank;
+          })
+          .map(({ id, title, difficulty, videolink }) => {
+            return (
+              <tr key={id} className=" border-b">
+                {/* problem status */}
+                {user ? (
+                  <th className="table_problem">
+                    <div
+                      className={`flex items-center justify-center ${
+                        SolvedProblems.includes(id)
+                          ? "text-green-700"
+                          : "text-black"
+                      }`}
+                    >
+                      <BsCheckCircle fontSize={"15"} width="18" />
+                    </div>
+                  </th>
+                ) : null}
+                {/* problem title */}
+                <th className="table_problem cursor-pointer font-extrabold hover:text-blue-400">
+                  <Link href={`/leetcode-problems/${id}`}>{title}</Link>
+                </th>
+                {/* problem difficulty */}
+                <th
+                  className={`table_problem font-extrabold ${
+                    difficulty === "Easy"
+                      ? "text-green-600"
+                      : difficulty === "Medium"
+                      ? "text-yellow-600"
+                      : "text-red-600"
+                  }`}
+                >
+                  {difficulty}
+                </th>
+                {/* youtube solution link */}
+                <th className="table_problem">
+                  {videolink ? (
+                    <div className="flex w-full cursor-pointer items-center justify-center text-red-600 duration-300 hover:scale-125">
+                      <AiFillYoutube
+                        fontSize={30}
+                        onClick={() => {
+                          setYoutubeSolution({
+                            isOpen: true,
+                            videolink: videolink,
+                          });
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <p>Missing</p>
+                  )}
+                </th>
+              </tr>
+            );
+          })}
       </tbody>
       {/* youtube player */}
       {YoutubeSolution.isOpen ? (

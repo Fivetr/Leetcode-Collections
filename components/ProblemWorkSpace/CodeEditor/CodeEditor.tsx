@@ -9,17 +9,38 @@ import { javascript } from "@codemirror/lang-javascript";
 import CodeEditorConsoleContainer from "./CodeEditorConsoleContainer";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
-import { Example } from "@/types";
+import { Problem } from "@/types";
+import { useState, useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { firebase_auth } from "@/firebase/firebase";
 
 type CodeEditorProps = {
-  startercode: string;
-  examples: Example[];
+  problem: Problem;
 };
 
-function CodeEditor({ startercode, examples }: CodeEditorProps) {
+function CodeEditor({ problem }: CodeEditorProps) {
   const ConsoleOpen = useSelector(
     (state: RootState) => state.ConsoleReduce.value
   );
+  const [user] = useAuthState(firebase_auth);
+
+  const [Success, setSuccess] = useState(false);
+  let [userCode, setuserCode] = useState<string>(problem.starterCode);
+
+  const handleOnChange = (value: string) => {
+    setuserCode(value);
+    localStorage.setItem(`code-${problem.id}`, JSON.stringify(value));
+  };
+
+  useEffect(() => {
+    const code = localStorage.getItem(`code-${problem.id}`)
+    if(user){
+      setuserCode(code ? JSON.parse(code) : problem.starterCode);
+    }
+    else{
+      setuserCode( problem.starterCode);
+    }
+  }, [problem.id, user, problem.starterCode]);
 
   return (
     // right side of workspace; container
@@ -40,27 +61,40 @@ function CodeEditor({ startercode, examples }: CodeEditorProps) {
             >
               <div className="w-full overflow-auto rounded-b-[5px]  bg-white">
                 <CodeMirror
-                  value={startercode}
+                  value={userCode}
                   theme={githubLight}
                   extensions={[javascript()]}
                   style={{ fontSize: 14 }}
+                  onChange={handleOnChange}
                 />
               </div>
-              <CodeEditorConsoleContainer examples={examples} />
+              <CodeEditorConsoleContainer
+                examples={problem.examples}
+                setSuccess={setSuccess}
+                userCode={userCode}
+                id={problem.id}
+                startFunction={problem.starterFunctionName}
+              />
             </Split>
           ) : (
             // stack the work space with codeMirror & console footer
             <div className="relative flex h-[calc(100vh-94px)] flex-col justify-between">
               <div className="h-[calc(98.5%-30px)] w-full overflow-auto rounded-b-[5px] bg-white">
                 <CodeMirror
-                  value={startercode}
+                  value={userCode}
                   theme={githubLight}
                   extensions={[javascript()]}
                   style={{ fontSize: 14 }}
+                  onChange={handleOnChange}
                 />
               </div>
               <div className="mt-2">
-                <CodeEditorConsoleContainer />
+                <CodeEditorConsoleContainer
+                  setSuccess={setSuccess}
+                  userCode={userCode}
+                  id={problem.id}
+                  startFunction={problem.starterFunctionName}
+                />
               </div>
             </div>
           )}

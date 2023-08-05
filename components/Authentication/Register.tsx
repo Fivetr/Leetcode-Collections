@@ -1,12 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { firebase_auth } from "../../firebase/firebase";
+import { firebase_auth, firestore } from "@/firebase/firebase";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/app/redux/store";
 import { open } from "@/app/redux/features/auth-slice";
 import { ImSpinner8 } from "react-icons/im";
 import { toast } from "react-toastify";
+import { setDoc, doc } from "firebase/firestore";
 
 function Register() {
   const dispatch = useDispatch<AppDispatch>();
@@ -14,7 +15,6 @@ function Register() {
   const [Register, setRegister] = useState({
     email: "",
     password: "",
-    name: "",
   });
 
   // firebase create account hook
@@ -35,10 +35,17 @@ function Register() {
         Register.password
       );
       if (!newUser) return;
+      const userData = {
+        email: Register.email,
+        uid: newUser.user.uid,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        solvedProblems: [],
+      };
+      await setDoc(doc(firestore, "users", newUser.user.uid), userData);
       dispatch(open());
     } catch (error: any) {
-      console.log(error);
-      alert(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -55,21 +62,7 @@ function Register() {
       onSubmit={handleSubmit}
     >
       <h2 className="text-2xl font-medium">Register</h2>
-      <div>
-        {/* user name input */}
-        <label htmlFor="text" className="mb-2 block text-sm font-medium">
-          Name
-        </label>
-        <input
-          onChange={handleChange}
-          type="text"
-          id="name"
-          name="name"
-          placeholder="User Name"
-          className="input"
-          required
-        />
-      </div>
+
       {/* email input */}
       <div>
         <label htmlFor="email" className="mb-2 block text-sm font-medium">

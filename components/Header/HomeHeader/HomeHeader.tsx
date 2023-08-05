@@ -1,21 +1,48 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../../../public/logo.png";
+import logo from "@/public/logo.png";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { firebase_auth } from "../../../firebase/firebase";
+import { firebase_auth } from "@/firebase/firebase";
 import { useSignOut } from "react-firebase-hooks/auth";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import ProblemList from "./ProblemList";
+import ProblemNav from "./ProblemNav";
 import Timer from "./Timer";
+import { RootState, AppDispatch } from "@/app/redux/store";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { problems } from "@/leetcode_problems/index";
+import { SetValue } from "@/app/redux/features/category-nav-slice";
 
 type HomeHeaderPros = {
   problemPage?: boolean;
+  problemId: string;
 };
 
-function HomeHeader({ problemPage }: HomeHeaderPros) {
+function HomeHeader({ problemPage, problemId }: HomeHeaderPros) {
+  const dispatch = useDispatch<AppDispatch>();
   const [user] = useAuthState(firebase_auth);
   const [signOut, loading, error] = useSignOut(firebase_auth);
+  const [category_problems, setCategory_problems] = useState<string[]>([]);
+
+  const currentCategory = useSelector(
+    (state: RootState) => state.CurrentCategory.value
+  );
+  if (problemPage) {
+    dispatch(SetValue(problems[problemId].category));
+  }
+
+  useEffect(() => {
+    const tmp: string[] = [];
+    for (const key in problems) {
+      if (problems[key].category === currentCategory) {
+        tmp.push(problems[key].id);
+      }
+    }
+    setCategory_problems(tmp);
+  }, [currentCategory]);
 
   return (
     <nav className="relative flex h-[3rem] w-full shrink-0 items-center border-b px-5">
@@ -31,22 +58,24 @@ function HomeHeader({ problemPage }: HomeHeaderPros) {
           {/* render problem navagation if currently in problem work space page */}
           {problemPage ? (
             <div className="flex flex-1 cursor-pointer items-center justify-center gap-2 px-2 py-2">
-              <ProblemList />
+              <ProblemList
+                category_problems={category_problems}
+                problemId={problemId}
+              />
 
               {/* problem navigate icon*/}
-              <div className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-lg border p-2 duration-300 hover:bg-gray-100">
-                <FaChevronLeft />
-              </div>
-              <div className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-lg border p-2 duration-300 hover:bg-slate-100">
-                <FaChevronRight />
-              </div>
+              <ProblemNav
+                problemId={problemId}
+                category_problems={category_problems}
+                currentCategory={currentCategory}
+              />
             </div>
           ) : null}
         </div>
         {/* right side of header */}
         <div className="flex flex-1 items-center justify-end gap-7 space-x-4">
           {/* render problem navagation if currently in problem work space page */}
-          {problemPage ? <Timer /> : null}
+          {problemPage && user ? <Timer /> : null}
 
           {/* check if user is logged in  */}
           {!user ? (

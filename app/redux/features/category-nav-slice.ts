@@ -1,19 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ProblemCategory } from "../../../leetcode_problems/problems";
 
 type InitialState = {
-  value: ProblemCategory;
+  value: string;
 };
 
 const initialState: InitialState = {
-  value: "All",
+  value: "Hashing",
 };
 
 export const CurrentCategory = createSlice({
   name: "CurrentCategory",
   initialState,
   reducers: {
-    SetValue: (state, action: PayloadAction<ProblemCategory>) => {
+    SetValue: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
     },
   },

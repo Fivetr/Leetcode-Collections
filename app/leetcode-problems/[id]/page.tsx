@@ -1,12 +1,21 @@
-"use client";
+import { problems } from "@/leetcode_problems/index";
+import HomeHeader from "@/components/Header/HomeHeader/HomeHeader";
+import WorkSpaceContainer from "@/components/ProblemWorkSpace/WorkSpaceContainer";
+import { notFound } from "next/navigation";
 
-import { HomeHeader, WorkSpaceContainer, Footer } from "@/components";
+export default function leetcode_problems({ params }: any) {
+  if (!problems[params.id]) {
+    notFound();
+  }
 
-export default function Home({ params }: { params: { id: string } }) {
   return (
     <main className="min-h-screen">
-      <HomeHeader problemPage={true} />
-      <WorkSpaceContainer problemId={params.id} />
+      <HomeHeader problemPage={true} problemId={params.id} />
+      <WorkSpaceContainer problem={params.id} />
     </main>
   );
+}
+
+export async function generateStaticParams() {
+  return Object.keys(problems).map((key) => ({ id: key }));
 }

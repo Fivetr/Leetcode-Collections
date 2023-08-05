@@ -6,17 +6,62 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import { useState } from "react";
 import { Example } from "@/types";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { firebase_auth, firestore } from "@/firebase/firebase";
+import { toast } from "react-toastify";
+import { problems } from "@/leetcode_problems";
+import { useRouter } from "next/navigation";
+import {arrayUnion, doc,updateDoc} from "firebase/firestore";
 
 type CodeEditorConsoleCOntainerProps = {
   examples?: Example[];
+  setSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+  userCode: string;
+  id: string;
+  startFunction: string
 };
 
 function CodeEditorConsoleContainer({
   examples,
+  setSuccess,
+  userCode,
+  id,
+  startFunction
 }: CodeEditorConsoleCOntainerProps) {
+  const router = useRouter();
+
+  const [user] = useAuthState(firebase_auth);
+
   const consoleOpen = useSelector(
     (state: RootState) => state.ConsoleReduce.value
   );
+
+  const handleOnClick = async () => {
+    if (!user) {
+      toast.error("Pleases Login to Submit Your Code");
+      return;
+    }
+    try {
+      userCode = userCode.slice(userCode.indexOf(startFunction))
+      const cb = new Function(`return ${userCode}`)();
+
+      const handler = problems[id as string].handlerFunction;
+      if (typeof handler === "function") {
+        const success = handler(cb);
+        if (success) {
+          toast.success("All Tests Passed");
+          setSuccess(true);
+          setTimeout(() => {
+            setSuccess(false);
+          }, 4000);
+          const userRef = doc(firestore, "users", user.uid)
+          await updateDoc(userRef, {solvedProblems: arrayUnion(id),})
+        }
+      }
+    } catch (error: any) {
+      toast.error("One or more test cases failed");
+    }
+  };
 
   const [TestCaseState, setTestCaseState] = useState(0);
   return (
@@ -58,11 +103,17 @@ function CodeEditorConsoleContainer({
             </div>
           </div>
 
-          <CodeEditorConsoleFooter />
+          <CodeEditorConsoleFooter
+            setSuccess={setSuccess}
+            handleOnClick={handleOnClick}
+          />
         </>
       ) : (
         // render only console footer
-        <CodeEditorConsoleFooter />
+        <CodeEditorConsoleFooter
+          setSuccess={setSuccess}
+          handleOnClick={handleOnClick}
+        />
       )}
     </div>
   );

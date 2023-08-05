@@ -1,15 +1,15 @@
 import assert from "assert";
-import { Problem } from "../../types/index";
+import { Problem } from "../../../types/index";
 
-const problemStatement = `<p class='mt-3'>
+const problemStatement = `<p class='mt-4'>
 Given an array of integers <code>nums</code> and an integer <code>target</code>, return
 <em>indices of the two numbers such that they add up to</em> <code>target</code>.
 </p>
-<p class='mt-3'>
+<p class='mt-4'>
 You may assume that each input would have <strong>exactly one solution</strong>, and you
 may not use thesame element twice.
 </p>
-<p class='mt-3'>You can return the answer in any order.</p>
+<p class='mt-4'>You can return the answer in any order.</p>
 `;
 
 const examples = [
@@ -27,19 +27,19 @@ const examples = [
   },
   {
     id: 3,
-    inputText: " nums = [3,3], target = 6",
+    inputText: "nums = [3,3], target = 6",
     outputText: "[0,1]",
   },
 ];
 
-const constraints = `<li class='mt-2'>
+const constraints = `<li class='mt-3 text-sm'>
 <code>2 ≤ nums.length ≤ 10</code>
-</li> <li class='mt-2'>
+</li> <li class='mt-3 text-sm'>
 <code>-10 ≤ nums[i] ≤ 10</code>
-</li> <li class='mt-2'>
+</li> <li class='mt-3 text-sm'>
 <code>-10 ≤ target ≤ 10</code>
 </li>
-<li class='mt-2 text-sm'>
+<li class='mt-3 text-sm'>
 <strong>Only one valid answer exists.</strong>
 </li>`;
 
@@ -48,32 +48,27 @@ const starterCode = `/**
 * @param {number} target
 * @return {number[]}
 */
-var twoSum = function(nums, target) {
-    // Write your code here
+function twoSum(nums, target) {
+  // Write your code here
 };`;
 
 const solution = {
-  solution: `/**
-  * @param {number[]} nums
-  * @param {number} target
-  * @return {number[]}
-  */
-  var twoSum = function(nums, target) {
-    let map = {};
-    for(let i = 0 ; i < nums.length ; i++){
-      let diff = target - nums[i];
-      if(diff in map){
-        return [map[diff],i]
-      } 
-      map[nums[i]] = i
-    }
-  };`,
+  solution: `function twoSum(nums, target) {
+  let map = {};
+  for(let i = 0 ; i < nums.length ; i++){
+    let diff = target - nums[i];
+    if(diff in map){
+      return [map[diff],i]
+    } 
+    map[nums[i]] = i
+  }
+};`,
   time_complexity: `n<sup>2</sup>`,
   space_complexity: `n`,
 };
 
 // checks if the user has the correct code
-const handlerTwoSum = (fn: any) => {
+const handle_TwoSum = (fn: any) => {
   // fn is the callback that user's code is passed into
   try {
     const nums = [
@@ -103,7 +98,7 @@ const handlerTwoSum = (fn: any) => {
 };
 
 export const twoSum: Problem = {
-  order: 1,
+  order: 3,
   id: "two-sum",
   title: "Two Sum",
   difficulty: "Easy",
@@ -111,8 +106,8 @@ export const twoSum: Problem = {
   problemStatement: problemStatement,
   examples: examples,
   constraints: constraints,
-  handlerFunction: handlerTwoSum,
   starterCode: starterCode,
-  starterFunctionName: "function twoSum(",
   solution: solution,
+  starterFunctionName: "function twoSum(",
+  handlerFunction: handle_TwoSum,
 };

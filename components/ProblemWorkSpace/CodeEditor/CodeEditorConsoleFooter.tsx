@@ -6,7 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import { openConsole, closeConsole } from "@/app/redux/features/console-slice";
 
-function CodeEditorConsoleFooter() {
+type CodeEditorConsoleFooterProps = {
+  setSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+  handleOnClick: () => void;
+};
+
+function CodeEditorConsoleFooter({
+  setSuccess,
+  handleOnClick,
+}: CodeEditorConsoleFooterProps) {
   const dispatch = useDispatch<AppDispatch>();
   const consoleOpen = useSelector(
     (state: RootState) => state.ConsoleReduce.value
@@ -34,7 +42,10 @@ function CodeEditorConsoleFooter() {
         </button>
       )}
       <div className="items-center pr-2">
-        <button className="inline-block cursor-pointer rounded-md border border-cyan-400 bg-cyan-400 px-3 py-1 text-center text-xs font-semibold text-white no-underline hover:border-sky-600 hover:bg-cyan-600">
+        <button
+          className="inline-block cursor-pointer rounded-md border border-cyan-400 bg-cyan-400 px-3 py-1 text-center text-xs font-semibold text-white no-underline hover:border-sky-600 hover:bg-cyan-600"
+          onClick={handleOnClick}
+        >
           Submit
         </button>
       </div>

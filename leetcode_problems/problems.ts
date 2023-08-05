@@ -1,39 +1,4 @@
-export type ProblemCategory =
-  | "Hashing"
-  | "Stack"
-  | "Two Pointers"
-  | "Binary Search"
-  | "Sliding Window"
-  | "Linked List"
-  | "Trees"
-  | "Heap"
-  | "Backtracking"
-  | "Graph"
-  | "Greedy"
-  | "Intervals"
-  | "1-D DP"
-  | "2-D DP"
-  | "All"
-  | "Frontend";
-
-export const CategoryList: ProblemCategory[] = [
-  "All",
-  "Hashing",
-  "Stack",
-  "Two Pointers",
-  "Binary Search",
-  "Sliding Window",
-  "Linked List",
-  "Trees",
-  "Heap",
-  "Backtracking",
-  "Graph",
-  "Greedy",
-  "Intervals",
-  "1-D DP",
-  "2-D DP",
-];
-export type Problem = {
+export type Problem_MetaData = {
   id: string;
   title: string;
   difficulty: string;
@@ -41,8 +6,8 @@ export type Problem = {
 };
 
 export type Category = {
-  category: ProblemCategory;
-  problems: Problem[];
+  category: string;
+  problems: Problem_MetaData[];
 };
 
 export const Problems: Category[] = [

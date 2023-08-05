@@ -27,11 +27,11 @@ export type Problem = {
   solution: Solution;
 };
 
-export type DBProblem = {
+export type problem_MetaData = {
   id: string;
   title: string;
+  difficulty: string;
   category: string;
-  order: number;
-  videoId?: string;
-  link?: string;
+  rank: number;
+  videolink?: string;
 };
