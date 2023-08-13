@@ -1,6 +1,7 @@
 import React from "react";
 import { Problem } from "@/types";
 import ProblemSolved from "./ProblemSolved";
+import Image from "next/image";
 
 type ProblemDescriptionProps = {
   problem: Problem;
@@ -30,7 +31,7 @@ function ProblemDescription({ problem }: ProblemDescriptionProps) {
         <p className="ml-4 text-xs font-medium">{problem.category}</p>
       </div>
       {/* problem descriptions */}
-      <div className="mt-4 text-sm">
+      <div className="mt-4 text-sm leading-[1.35rem]">
         <div dangerouslySetInnerHTML={{ __html: problem.problemStatement }} />
       </div>
       {/* problem examples */}
@@ -38,8 +39,18 @@ function ProblemDescription({ problem }: ProblemDescriptionProps) {
         {problem.examples.map((example, index) => (
           <div key={example.id}>
             <p className="font-medium">Example {index + 1}: </p>
+            {example.img && (
+              <Image
+                src={example.img}
+                alt=""
+                className="mt-3"
+                width={example.img_size}
+                height={example.img_size}
+              />
+            )}
+
             <div>
-              <pre className="my-[1rem] whitespace-pre-wrap rounded-md border-2 border-[#faf8f8] bg-[#f7f7f7] p-[1rem] text-[.95rem] text-black">
+              <pre className="my-[1rem] overflow-auto whitespace-pre-wrap rounded-md border-2 border-[#faf8f8] bg-[#f7f7f7] p-[1rem] text-[.95rem] text-black">
                 <strong>Input: </strong> {example.inputText} <br />
                 <strong>Output:</strong> {example.outputText} <br />
                 {example.explanation ? (

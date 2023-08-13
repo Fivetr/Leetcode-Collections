@@ -18,7 +18,7 @@ import { SetValue } from "@/app/redux/features/category-nav-slice";
 
 type HomeHeaderPros = {
   problemPage?: boolean;
-  problemId: string;
+  problemId?: string;
 };
 
 function HomeHeader({ problemPage, problemId }: HomeHeaderPros) {
@@ -30,7 +30,7 @@ function HomeHeader({ problemPage, problemId }: HomeHeaderPros) {
   const currentCategory = useSelector(
     (state: RootState) => state.CurrentCategory.value
   );
-  if (problemPage) {
+  if (problemPage && problemId) {
     dispatch(SetValue(problems[problemId].category));
   }
 

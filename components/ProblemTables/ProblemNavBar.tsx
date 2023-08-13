@@ -27,7 +27,6 @@ function ProblemNavBar() {
   const currentCategory = useSelector(
     (state: RootState) => state.CurrentCategory.value
   );
-  console.log(currentCategory);
 
   const dispatch = useDispatch<AppDispatch>();
   return (

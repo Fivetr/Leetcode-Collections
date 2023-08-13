@@ -14,7 +14,7 @@ function WorkSpaceContainer({ problem }: WorkSpaceContainerProps) {
   return (
     <>
       {/* split the deatil section and code editor */}
-      <Split className="split" minSize={250}>
+      <Split className="split" minSize={420}>
         <ProblemDetailContainer problem={problems[problem]} />
         <CodeEditor problem={problems[problem]} />
       </Split>

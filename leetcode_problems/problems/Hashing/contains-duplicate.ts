@@ -1,5 +1,5 @@
 import assert from "assert";
-import { Problem } from "../../../types/index";
+import { Problem } from "@/types/index";
 
 const problemStatement = `<p class='mt-4'>
 Given an integer array <code>nums</code>, return <code>true</code> if any value appears

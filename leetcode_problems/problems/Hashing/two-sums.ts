@@ -1,5 +1,5 @@
 import assert from "assert";
-import { Problem } from "../../../types/index";
+import { Problem } from "@/types/index";
 
 const problemStatement = `<p class='mt-4'>
 Given an array of integers <code>nums</code> and an integer <code>target</code>, return
@@ -63,7 +63,7 @@ const solution = {
     map[nums[i]] = i
   }
 };`,
-  time_complexity: `n<sup>2</sup>`,
+  time_complexity: `n`,
   space_complexity: `n`,
 };
 

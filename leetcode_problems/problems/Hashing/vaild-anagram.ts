@@ -1,5 +1,5 @@
 import assert from "assert";
-import { Problem } from "../../../types/index";
+import { Problem } from "@/types/index";
 
 const problemStatement = `<p class='mt-4'>
 Given two strings <code>s</code> and <code>t</code>, return <code>true</code> <em>if</em> <code>t</code> 
@@ -59,8 +59,8 @@ const solution = {
   }
   return true
 };`,
-  time_complexity: `n<sup>2</sup>`,
-  space_complexity: `n`,
+  time_complexity: `s+t`,
+  space_complexity: `s+t`,
 };
 
 // checks if the user has the correct code

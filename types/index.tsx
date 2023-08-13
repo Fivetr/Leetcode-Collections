@@ -4,6 +4,7 @@ export type Example = {
   outputText: string;
   explanation?: string;
   img?: string;
+  img_size?: number;
 };
 
 export type Solution = {

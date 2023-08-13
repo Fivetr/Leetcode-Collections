@@ -33,12 +33,11 @@ function CodeEditor({ problem }: CodeEditorProps) {
   };
 
   useEffect(() => {
-    const code = localStorage.getItem(`code-${problem.id}`)
-    if(user){
+    const code = localStorage.getItem(`code-${problem.id}`);
+    if (user) {
       setuserCode(code ? JSON.parse(code) : problem.starterCode);
-    }
-    else{
-      setuserCode( problem.starterCode);
+    } else {
+      setuserCode(problem.starterCode);
     }
   }, [problem.id, user, problem.starterCode]);
 
@@ -59,7 +58,7 @@ function CodeEditor({ problem }: CodeEditorProps) {
               sizes={[78, 22]}
               minSize={60}
             >
-              <div className="w-full overflow-auto rounded-b-[5px]  bg-white">
+              <div className="w-full overflow-x-hidden rounded-b-[5px]  bg-white">
                 <CodeMirror
                   value={userCode}
                   theme={githubLight}
@@ -79,7 +78,7 @@ function CodeEditor({ problem }: CodeEditorProps) {
           ) : (
             // stack the work space with codeMirror & console footer
             <div className="relative flex h-[calc(100vh-94px)] flex-col justify-between">
-              <div className="h-[calc(98.5%-30px)] w-full overflow-auto rounded-b-[5px] bg-white">
+              <div className="h-[calc(98.5%-30px)] w-full overflow-x-hidden rounded-b-[5px] bg-white">
                 <CodeMirror
                   value={userCode}
                   theme={githubLight}
