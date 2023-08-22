@@ -45,16 +45,34 @@ const starterCode = `/**
 * @param {number} k
 * @return {number[]}
 */
-function maxSlidingWindow(nums, k) {
+var maxSlidingWindow = function(nums, k) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function maxSlidingWindow(nums, k) {
-
+  solution: `var maxSlidingWindow = function(nums, k) {
+  const res = [];
+  let left = 0, right = 0;
+  const q = [];
+  while (right < nums.length) {
+      // pop the last element if the last elements in q is smaller than nums[right]
+      while (q.length > 0 && nums[right] > nums[q[q.length - 1]]) {
+          q.pop();
+      }
+      q.push(right);
+      if (left > q[0]) {
+          q.shift();
+      }
+      if (right + 1 >= k) {
+          res.push(nums[q[0]]);
+          left++;
+      }
+      right++;
+    }
+    return res; 
 };`,
   time_complexity: `n`,
-  space_complexity: `n`,
+  space_complexity: `k`,
 };
 
 // checks if the user has the correct code
@@ -80,7 +98,7 @@ const handle_maxSlidingWindow = (fn: any) => {
 };
 
 export const SlidingWindowMaximum: Problem = {
-  order: 6,
+  order: 7,
   id: "sliding-window-maximum",
   title: "Sliding Window Maximum",
   difficulty: "Hard",
@@ -90,6 +108,6 @@ export const SlidingWindowMaximum: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function maxSlidingWindow(",
+  starterFunctionName: "maxSlidingWindow(nums, k)",
   handlerFunction: handle_maxSlidingWindow,
 };

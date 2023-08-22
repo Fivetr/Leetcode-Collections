@@ -36,12 +36,12 @@ const starterCode = `/**
  * @param {number} target
  * @return {number[]}
 */
-function validParentheses(s) {
+var validParentheses = function(s) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function validParentheses(s) {
+  solution: `var validParentheses = function(s) {
   if (s.length % 2 !== 0) return false;
 
   // Initialize stack to store the closing brackets expected
@@ -79,6 +79,7 @@ export const handle_ValidParentheses = (fn: any) => {
     return true;
   } catch (error: any) {
     console.error("Error from validParenthesesHandler: ", error);
+    console.log(error);
     throw new Error(error);
   }
 };
@@ -94,6 +95,6 @@ export const validParentheses: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function validParentheses(",
+  starterFunctionName: "validParentheses(s)",
   handlerFunction: handle_ValidParentheses,
 };

@@ -50,16 +50,47 @@ const starterCode = `/**
 * @param {string} s
 * @return {boolean}
 */
-function isPalindrome(s) {
+var isPalindrome = function(s) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function isPalindrome(s) {
-
+  solution: `var isPalindrome = function(s) {
+  const isAlphaNumeric = (char) => {
+    const code = char.charCodeAt(0);
+    return (
+      (code >= 48 && code <= 57) ||
+      (code >= 65 && code <= 90) ||
+      (code >= 97 && code <= 122)
+    );
+  };
+  /* Initialize the left pointer to the start of the string,
+  the right pointer to the end of the string */
+  let left = 0, right = s.length - 1;
+  while (left < right) {
+    // If s[left] is not an alphanumeric character left++
+    if (!isAlphaNumeric(s[left])) left++;
+    // If s[right] is not an alphanumeric character righ--
+    else if (!isAlphaNumeric(s[right])) right--;
+    /* If the lowercase of s[left] is not equal to the lowercase of s[right]
+    the string is not a palindrome. Return false */ 
+    else if (
+      s[left].toLowerCase() !== s[right].toLowerCase()
+    )
+      return false;
+    /* If the characters are equal, increment left by 1 and decrement 
+    right by 1 to continue checking the next pair of characters. */ 
+    else {
+      left++;
+      right--;
+    }
+  }
+  /*If the loop completes without returning false, 
+  it means the string is a palindrome. Return true.*/
+  return true;
 };`,
   time_complexity: `n`,
-  space_complexity: `n`,
+  space_complexity: `1`,
 };
 
 // checks if the user has the correct code
@@ -94,6 +125,6 @@ export const ValidPalindrome: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function isPalindrome(",
+  starterFunctionName: "isPalindrome(s)",
   handlerFunction: handle_IsPalindrome,
 };

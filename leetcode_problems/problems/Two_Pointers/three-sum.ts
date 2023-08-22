@@ -48,16 +48,52 @@ const starterCode = `/**
 * @param {number[]} nums
 * @return {number[][]}
 */
-function threeSum(nums) {
+var threeSum = function(nums) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function threeSum(nums) {
-
+  solution: `var threeSum = function(nums) {
+  const results = [];
+  if (nums.length < 3) return results;
+  // Having the numbers in ascending order
+  nums = nums.sort((a, b) => a - b);
+  let target = 0;
+  for (let i = 0; i < nums.length - 2; i++) {
+    /* i represents the "left" most number in sorted array.
+    once this number hits 0, there's no need to go further since
+    positive numbers cannot sum to a negative number */
+    if (nums[i] > target) break;
+    // we don't want repeats, so skip numbers we've already seen
+    if (i > 0 && nums[i] === nums[i - 1]) continue;
+    // use two sum 2 technique to find the remaining numbers
+    let left = i + 1, right = nums.length - 1;
+    while (left < right) {
+      let sum = nums[i] + nums[left] + nums[right];
+      if (sum === target) {
+        // store the valid threesum
+        results.push([nums[i], nums[left], nums[right]]);
+        /* continue to increment left and decrement dight as long as 
+        those values are duplicated. Skip values we've already seen.*/
+        while (nums[left] === nums[left + 1]) left++;
+        while (nums[right] === nums[right - 1]) right--;
+        /* increment left and decrement right for 
+        other potential combos where i is the anchor */
+        left++;
+        right--;
+        // if the sum is too small, increment left
+      } else if (sum < target) {
+        left++;
+        // if the sum is too large, decrement right
+      } else {
+        right--;
+      }
+    }
+  }
+  return results;
 };`,
-  time_complexity: `n`,
-  space_complexity: `n`,
+  time_complexity: `n<sup>2</sup>`,
+  space_complexity: `1`,
 };
 
 // checks if the user has the correct code
@@ -103,6 +139,6 @@ export const ThreeSum: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function threeSum(",
+  starterFunctionName: "threeSum(nums)",
   handlerFunction: handle_threeSum,
 };

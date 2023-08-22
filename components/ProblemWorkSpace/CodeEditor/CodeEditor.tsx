@@ -73,6 +73,7 @@ function CodeEditor({ problem }: CodeEditorProps) {
                 userCode={userCode}
                 id={problem.id}
                 startFunction={problem.starterFunctionName}
+                extraParams={problem.extraParams}
               />
             </Split>
           ) : (
@@ -93,6 +94,7 @@ function CodeEditor({ problem }: CodeEditorProps) {
                   userCode={userCode}
                   id={problem.id}
                   startFunction={problem.starterFunctionName}
+                  extraParams={problem.extraParams}
                 />
               </div>
             </div>

@@ -41,16 +41,44 @@ const starterCode = `/**
 * @param {string} s2
 * @return {boolean}
 */
-function checkInclusion(s1, s2) {
+var checkInclusion = function(s1, s2) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function checkInclusion(s1, s2) {
-
+  solution: `var checkInclusion = function(s1, s2) {
+  if (s1.length > s2.length) return false;
+  // Store the count of required string s1
+  let countMap = {}; 
+  for (let i = 0; i < s1.length; i++) {
+    countMap[s1[i]] = (countMap[s1[i]] || 0) + 1;
+  }
+  let left = 0, right = 0, requiredLength = s1.length
+  while (right < s2.length) {
+    // If we found s2 character in s1 then decrease requiredLength
+    if (countMap[s2[right]] > 0) requiredLength--;
+    // Decrease the count in countMap
+    // Increment window  by 1 step
+    countMap[s2[right]]--;
+    right++ 
+    // If requiredLength becomes 0 it means we have found a match of the s2 substring
+    if (requiredLength === 0) return true;
+    // If the window length is equal to s1 length 
+    if (right - left === s1.length) {
+      // if the left element we're removing was a required character then increase requiredLength
+      // because that element will no longer be the part of sliding window
+      if (countMap[s2[left]] >= 0) requiredLength++;
+      // Increase the count of left element removed from window
+      countMap[s2[left]]++;
+      // Decrease the window size by 1 from left
+      left++
+    }
+  }
+  // If match was not found we return false
+  return false;
 };`,
   time_complexity: `n`,
-  space_complexity: `n`,
+  space_complexity: `s1`,
 };
 
 // checks if the user has the correct code
@@ -76,7 +104,7 @@ const handle_checkInclusion = (fn: any) => {
 };
 
 export const PermutationInString: Problem = {
-  order: 4,
+  order: 5,
   id: "permutation-in-string",
   title: "Permutation in String",
   difficulty: "Medium",
@@ -86,6 +114,6 @@ export const PermutationInString: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function checkInclusion(",
+  starterFunctionName: "checkInclusion(s1, s2)",
   handlerFunction: handle_checkInclusion,
 };

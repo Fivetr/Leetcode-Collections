@@ -31,7 +31,7 @@ function ProblemDescription({ problem }: ProblemDescriptionProps) {
         <p className="ml-4 text-xs font-medium">{problem.category}</p>
       </div>
       {/* problem descriptions */}
-      <div className="mt-4 text-sm leading-[1.35rem]">
+      <div className="mt-4 text-[.96rem] leading-[1.35rem]">
         <div dangerouslySetInnerHTML={{ __html: problem.problemStatement }} />
       </div>
       {/* problem examples */}

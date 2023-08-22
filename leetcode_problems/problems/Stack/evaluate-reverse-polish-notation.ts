@@ -65,12 +65,12 @@ const starterCode = `/**
 * @param {string[]} tokens
 * @return {number}
 */
-function evalRPN(tokens) {
+var evalRPN = function(tokens) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function evalRPN(tokens) {
+  solution: `var evalRPN = function(tokens) {
   const stack = []
   for (let c of tokens) {
     if (c === "+") {
@@ -130,6 +130,6 @@ export const EvaluateReversePolishNotation: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function evalRPN(",
+  starterFunctionName: "evalRPN(tokens)",
   handlerFunction: handle_EvalRPN,
 };

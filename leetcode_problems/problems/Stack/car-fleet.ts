@@ -79,12 +79,12 @@ const starterCode = `/**
 * @param {number[]} speed
 * @return {number}
 */
-function carFleet(target, position, speed){
+var carFleet = function(target, position, speed{
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function carFleet(target, position, speed){
+  solution: `var carFleet = function(target, position, speed{
   //create pair of pos and speed
   const pair = position.map((pos, idx) => [pos, speed[idx]]);
   const stack = [];
@@ -149,6 +149,6 @@ export const CarFleet: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function carFleet(",
+  starterFunctionName: "carFleet(target, position, speed)",
   handlerFunction: handle_CarFleet,
 };

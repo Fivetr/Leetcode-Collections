@@ -66,12 +66,12 @@ const starterCode = `/**
 * @param {ListNode} list2
 * @return {ListNode}
 */
-function mergeTwoLists(list1, list2) {
+var mergeTwoLists = function(list1, list2) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function mergeTwoLists(list1, list2) {
+  solution: `var mergeTwoLists = function(list1, list2) {
   if (!list1) return list2;
   else if (!list2) return list1;
   else if (list1.val <= list2.val) {
@@ -100,10 +100,12 @@ const handle_mergeTwoLists = (fn: any) => {
       const list1 = createLinkedList(list1s[i]);
       const list2 = createLinkedList(list2s[i]);
       const result = fn(list1.head, list2.head);
+      console.log(result);
       assert.deepStrictEqual(getListValues(result), answers[i]);
     }
     return true;
   } catch (error: any) {
+    console.log(error);
     console.log("mergeTwoLists handler function error");
     throw new Error(error);
   }
@@ -120,6 +122,6 @@ export const MergeTwoSortedLists: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function mergeTwoLists(",
+  starterFunctionName: "mergeTwoLists(list1, list2)",
   handlerFunction: handle_mergeTwoLists,
 };

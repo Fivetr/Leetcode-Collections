@@ -46,13 +46,40 @@ const starterCode = `/**
 * @param {number} k
 * @return {number}
 */
-function characterReplacement(s, k) {
+var characterReplacement = function(s, k) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function characterReplacement(s, k) {
-
+  solution: `var characterReplacement = function(s, k) {
+  // Use hashmap to track the frequency of letters
+  const frequencies = {}
+  // Track the most frequent letter we've seen.
+  let highestFrequency = 0
+  // Track the size of the longest valid window we encounter.
+  let longest = 0
+  let left = 0, right = 0
+  while (right < s.length) {
+      // Add it to the frequencies hashmap
+      frequencies[s[right]] = frequencies[s[right]] + 1 || 1
+      // Check if this newly encountered character is also the most frequent
+      highestFrequency = Math.max(highestFrequency, frequencies[s[right]])
+      // A window is valid if window.length - highestFrequency <= k
+      /* If the current window is not valid, we want to increment 
+         the left pointer until we get to a valid window */
+      /* No need to update highestFrequency, because we'll only get a longer 
+         valid window when we encounter a letter that is more frequent in 
+         its window than the last highestFrequency count was. */
+      while ((right - left + 1) - highestFrequency > k) {
+          frequencies[s[left]] -= 1
+          left++        
+        }
+      // Once we have a valid window, check if it's longer than the previous longest valid window
+      longest = Math.max(longest, right - left + 1)
+      right++
+    }
+  // Return the longest valid window we've seen
+  return longest
 };`,
   time_complexity: `n`,
   space_complexity: `n`,
@@ -81,7 +108,7 @@ const handle_characterReplacement = (fn: any) => {
 };
 
 export const LongestRepeatingCharacterReplacement: Problem = {
-  order: 3,
+  order: 4,
   id: "longest-repeating-character-replacement",
   title: "Longest Repeating Character Replacement",
   difficulty: "Medium",
@@ -91,6 +118,6 @@ export const LongestRepeatingCharacterReplacement: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function characterReplacement(",
+  starterFunctionName: "characterReplacement(s, k)",
   handlerFunction: handle_characterReplacement,
 };

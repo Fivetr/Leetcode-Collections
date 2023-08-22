@@ -70,16 +70,30 @@ const starterCode = `/**
 * @param {number} target
 * @return {number[]}
 */
-function twoSum(numbers, target) {
+var twoSum = function(numbers, target) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function twoSum(numbers, target) {
-
+  solution: `var twoSum = function(numbers, target) {
+  // declare two pointers at the start and end of the array
+  let left = 0, right = numbers.length - 1;
+  while (left < right) {
+    let sum = numbers[left] + numbers[right];
+    // if the sum is greater than the target, right--
+    if (sum > target) {
+      right--;
+      // if the sum is less than the target, left++
+    } else if (sum < target) {
+      left++;
+      // if the sum is equal to the target, return the two pointers
+    } else {
+      return [left + 1, right + 1];
+    }
+  }
 };`,
   time_complexity: `n`,
-  space_complexity: `n`,
+  space_complexity: `1`,
 };
 
 // checks if the user has the correct code
@@ -124,6 +138,6 @@ export const TwoSum2: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function twoSum(",
+  starterFunctionName: "twoSum(numbers, target)",
   handlerFunction: handle_twoSum,
 };

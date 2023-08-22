@@ -48,16 +48,34 @@ const starterCode = `/**
 * @param {number} target
 * @return {number}
 */
-function search(nums, target) {
+var search = function(nums, target) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function search(nums, target) {
-
+  solution: `var search = function(nums, target) {
+  let left = 0, right = nums.length - 1;
+  while (left <= right) {
+    // get mid value
+    let mid = Math.floor((left + right) / 2); 
+    // if mid value is equal to target we will return the mid
+    if (nums[mid] === target) {
+      return mid;
+      /* if mid value is less than target, we 
+         eliminate all the values from left to mid.*/
+    } else if (nums[mid] < target) { 
+      left = mid + 1; 
+      /* if mid value is greater than target, we 
+         eliminate all the values from mid to right.*/
+    } else {
+        right = mid - 1;
+    }
+  }
+  // target does not else exits in nums
+  return -1;
 };`,
-  time_complexity: `n`,
-  space_complexity: `n`,
+  time_complexity: `logn`,
+  space_complexity: `1`,
 };
 
 // checks if the user has the correct code
@@ -71,7 +89,7 @@ const handle_search = (fn: any) => {
 
     const targets = [9, 2];
 
-    const answers = [9, 2];
+    const answers = [4, -1];
 
     // loop all tests to check if the user's code is correct
     for (let i = 0; i < nums.length; i++) {
@@ -97,6 +115,6 @@ export const BinarySearch: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function search(",
+  starterFunctionName: "search(nums, target)",
   handlerFunction: handle_search,
 };

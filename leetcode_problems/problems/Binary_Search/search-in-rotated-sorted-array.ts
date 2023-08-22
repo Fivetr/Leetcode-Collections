@@ -66,16 +66,45 @@ const starterCode = `/**
 * @param {number} target
 * @return {number}
 */
-function search(nums, target) {
+var search = function(nums, target) {
   // Write your code here
+
 };`;
 
 const solution = {
-  solution: `function search(nums, target) {
-
+  solution: `var search = function(nums, target) {
+  let left = 0, right = nums.length - 1;
+  while (left <= right) {
+      let mid = Math.floor((left + right) / 2);
+      if (target === nums[mid]) {
+          return mid;
+      }
+      // check if mid belongs to left sorted portion. 
+      // range [left ... mid] [3,4,5,..]
+      if (nums[left] <= nums[mid]) {
+          // now we know nums[left] must be <= nums[mid]
+          // check if target belongs in range [left ... mid]
+          if (nums[left] <= target && nums[mid] >= target) {
+              right = mid - 1;
+          } else {
+              left = mid + 1;
+          }
+        // check if mid belongs to right sorted portion. 
+        // range [mid ... right] [..,1,2,3]
+      } else {
+          // now we know nums[right] must be > nums[mid]
+          // check if target belongs in range [left ... mid]
+          if (nums[right] >= target && nums[mid] <= target) {
+              left = mid + 1;
+          } else {
+              right = mid - 1;
+          }
+      }
+  }
+  return -1;
 };`,
-  time_complexity: `n`,
-  space_complexity: `n`,
+  time_complexity: `logn`,
+  space_complexity: `1`,
 };
 
 // checks if the user has the correct code
@@ -90,6 +119,7 @@ const handle_search = (fn: any) => {
     for (let i = 0; i < nums.length; i++) {
       // result is the output of the user's function and answer is the expected output
       const result = fn(nums[i], targets[i]);
+      console.log;
       assert.deepStrictEqual(result, answers[i]);
     }
     return true;
@@ -110,6 +140,6 @@ export const SearchInRotatedSortedArray: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function search(",
+  starterFunctionName: "search(nums, target)",
   handlerFunction: handle_search,
 };

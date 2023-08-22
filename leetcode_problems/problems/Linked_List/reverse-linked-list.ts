@@ -52,12 +52,12 @@ const starterCode = `/**
 * @param {ListNode} head
 * @return {ListNode}
 */
-function reverseList(head) {
+var reverseList = function(head) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function reverseList(head) {
+  solution: `var reverseList = function(head) {
   let current = head;
   let prev = null;
   while (current !== null) {
@@ -104,6 +104,6 @@ export const ReverseLinkedList: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function reverseList(",
+  starterFunctionName: "reverseList(head)",
   handlerFunction: handle_reverseList,
 };

@@ -48,16 +48,26 @@ const starterCode = `/**
 * @param {number[]} prices
 * @return {number}
 */
-function maxProfit(prices) {
+var maxProfit = function(prices) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function maxProfit(prices) {
-
+  solution: `var maxProfit = function(prices) {
+  let profit = 0;
+  let minPrice = Number.MAX_VALUE;
+  for (let i = 0; i < prices.length; i++) {
+      /* find the current minimum price p, since any prices after it that is 
+         not less than p with have higher profit that previous min price*/
+      minPrice = Math.min(minPrice, prices[i]);
+      /* Since time can not go backward, we need to record the 
+         maximum profit of each min price we encoutered*/
+      profit = Math.max(profit, prices[i] - minPrice);
+  }
+  return profit;  
 };`,
   time_complexity: `n`,
-  space_complexity: `n`,
+  space_complexity: `1`,
 };
 
 // checks if the user has the correct code
@@ -79,7 +89,7 @@ const handle_maxProfit = (fn: any) => {
     }
     return true;
   } catch (error: any) {
-    console.log("IsPalindrome handler function error");
+    console.log("maxProfit handler function error");
     throw new Error(error);
   }
 };
@@ -95,6 +105,6 @@ export const BestTimeToBuyAndSellStock: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function maxProfit(",
+  starterFunctionName: "maxProfit(prices)",
   handlerFunction: handle_maxProfit,
 };

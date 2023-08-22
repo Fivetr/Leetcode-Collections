@@ -1,5 +1,6 @@
 import assert from "assert";
 import { Problem } from "@/types/index";
+import img1 from "./images/rain_water_1.jpg";
 
 const problemStatement = `<p class='mt-4'>
 Given <code>n</code> non-negative integers representing an elevation map where 
@@ -13,6 +14,8 @@ const examples = [
     outputText: "6",
     explanation:
       "The above elevation map (black section) is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped.",
+    img: img1.src,
+    img_size: 400,
   },
   {
     id: 2,
@@ -37,16 +40,32 @@ const starterCode = `/**
 * @param {number[]} height
 * @return {number}
 */
-function trap(height) {
+var trap = function(height) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function trap(height) {
-
+  solution: `var trap = function(height) {
+  let left = 0,
+    right = height.length - 1,
+    left_max = 0,
+    right_max = 0,
+    water = 0;
+  while (left <= right) {
+    if (height[left] <= height[right]) {
+      if (height[left] > left_max) left_max = height[left];
+      else water += left_max - height[left];
+      left++;
+    } else {
+      if (height[right] > right_max) right_max = height[right];
+      else water += right_max - height[right];
+      right--;
+    }
+  }
+  return water;
 };`,
   time_complexity: `n`,
-  space_complexity: `n`,
+  space_complexity: `1`,
 };
 
 // checks if the user has the correct code
@@ -84,6 +103,6 @@ export const TrappingRainWater: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function trap(",
+  starterFunctionName: "trap(height)",
   handlerFunction: handle_trap,
 };

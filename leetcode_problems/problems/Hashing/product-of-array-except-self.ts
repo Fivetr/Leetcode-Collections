@@ -42,12 +42,12 @@ const starterCode = `/**
 * @param {number[]} nums
 * @return {number[]}
 */
-function productExceptSelf(nums) {
+var productExceptSelf = function(nums) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function productExceptSelf(nums) {
+  solution: `var productExceptSelf = function(nums) {
   let res = Array(nums.length);
   // get product of prefix expect self 
   let prefix = 1
@@ -108,6 +108,6 @@ export const ProductOfArrayExpectSelf: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function productExceptSelf(",
+  starterFunctionName: "productExceptSelf(nums)",
   handlerFunction: handle_ProductExceptSelf,
 };

@@ -53,3 +53,86 @@ export function getListValues(list: Node | null): (number | null)[] {
   }
   return values;
 }
+
+// const cb =
+//   new Function(`return function lastStoneWeight(stones, MaxPriorityQueue) {
+//   // Write your code here
+//   const queue = new MaxPriorityQueue();
+
+//   for (let stone of stones) queue.enqueue(stone)
+//     console.log(queue)
+//     while (queue.size() > 1) {
+//         let first = queue.dequeue().element;
+//         let second = queue.dequeue().element;
+//         if (first !== second) queue.enqueue(first-second)
+//         console.log(queue)
+//     }
+//     return queue.size() === 0 ? 0 : queue.front().element
+// };`)();
+
+// const handle_LastStoneWeight = (fn: any) => {
+//   // fn is the callback that user's code is passed into
+//   try {
+//     const stones = [[2, 7, 4, 1, 8, 1], [1]];
+//     const answers = [1, 1];
+//     let maxPriorityQueue = MaxPriorityQueue;
+//     // loop all tests to check if the user's code is correct
+//     for (let i = 0; i < stones.length; i++) {
+//       // result is the output of the user's function and answer is the expected output
+//       const result = fn(stones[i], maxPriorityQueue);
+//       console.log(result);
+//     }
+//     return true;
+//   } catch (error: any) {
+//     console.log("LastStoneWeight handler function error");
+//     console.log(error);
+//     throw new Error(error);
+//   }
+// };
+// let maxPriorityQueue = MaxPriorityQueue;
+// console.log(cb([2, 7, 4, 1, 8, 1], maxPriorityQueue));
+
+// import { MaxPriorityQueue } from "@datastructures-js/priority-queue";
+// function test(stones: any) {
+//   // Write your code here
+//   const queue = new MaxPriorityQueue<any>();
+
+//   for (let stone of stones) queue.enqueue(stone);
+//   console.log(queue);
+
+//   while (queue.size() > 1) {
+//     let first = queue.dequeue();
+//     let second = queue.dequeue();
+//     console.log(queue);
+//     if (first !== second) queue.enqueue(first - second);
+//     console.log(queue);
+//   }
+
+//   return queue.size() === 0 ? 0 : queue.front();
+// }
+
+// console.log(test([2, 7, 4, 1, 8, 1]));
+
+// import { MaxPriorityQueue } from "@datastructures-js/priority-queue";
+// let maxPriorityQueue = MaxPriorityQueue
+// const cb = new Function(`return function(stones, MaxPriorityQueue){
+//   function lastStoneWeight(stones, MaxPriorityQueue) {
+//     // Write your code here
+//     const queue = new MaxPriorityQueue();
+
+//     for (let stone of stones) queue.enqueue(stone)
+//       console.log(queue)
+//       while (queue.size() > 1) {
+//           let first = queue.dequeue();
+//           let second = queue.dequeue();
+//           if (first !== second) queue.enqueue(first-second)
+//           console.log(queue)
+//       }
+//       return queue.size() === 0 ? 0 : queue.front()
+//   }
+//   return lastStoneWeight(stones, MaxPriorityQueue)
+// }`)();
+
+// console.log(cb([2, 7, 4, 1, 8, 1],maxPriorityQueue))
+// let s = "lastStoneWeight(stones, MaxPriorityQueue)"
+// console.log(s.slice(s.indexOf("(")))

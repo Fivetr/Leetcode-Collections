@@ -22,6 +22,7 @@ function ProblemNavBar() {
     "Intervals",
     "1-D DP",
     "2-D DP",
+    "Math",
   ];
 
   const currentCategory = useSelector(

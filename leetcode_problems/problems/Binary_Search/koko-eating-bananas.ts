@@ -57,15 +57,38 @@ const starterCode = `/**
 * @param {number} h
 * @return {number}
 */
-function minEatingSpeed(piles, h) {
+var minEatingSpeed = function(piles, h) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function minEatingSpeed(piles, h) {
-
+  solution: `var minEatingSpeed = function(piles, h) {
+  // minimum 1 banana should be eaten per hour, otherwise no progress
+  let left = 1; 
+  // at max, max(piles) bananas are required to be eaten per hour
+  let right = Math.max(...piles); 
+  let res = right
+  // Binary Search
+  while(left <= right) {
+      // mid will be the speed of eating
+      let mid = Math.floor((left + right) / 2); 
+      // Hours is the total time required to finish all bananas at speed of mid
+      let hours = 0; 
+      for(let i = 0; i < piles.length; i++) {
+          hours += Math.ceil(piles[i] / mid);
+      }
+      // Decrease the rate
+      if(hours <= h) {
+          res = Math.min(res, mid);
+          right = mid -1
+        // Increase the rate
+      } else {
+          left = mid + 1;
+      }
+  }
+  return res;
 };`,
-  time_complexity: `n`,
+  time_complexity: `log(max(p)) * p`,
   space_complexity: `n`,
 };
 
@@ -73,14 +96,19 @@ const solution = {
 const handle_minEatingSpeed = (fn: any) => {
   // fn is the callback that user's code is passed into
   try {
-    const s = ["A man, a plan, a canal: Panama", "race a car", " "];
+    const piles = [
+      [3, 6, 7, 11],
+      [30, 11, 23, 4, 20],
+      [30, 11, 23, 4, 20],
+    ];
+    const h = [8, 5, 6];
 
-    const answers = [true, false, true];
+    const answers = [4, 30, 23];
 
     // loop all tests to check if the user's code is correct
-    for (let i = 0; i < s.length; i++) {
+    for (let i = 0; i < piles.length; i++) {
       // result is the output of the user's function and answer is the expected output
-      const result = fn(s[i]);
+      const result = fn(piles[i], h[i]);
       assert.deepStrictEqual(result, answers[i]);
     }
     return true;
@@ -101,6 +129,6 @@ export const KoKoEatingBananas: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function minEatingSpeed(",
+  starterFunctionName: "minEatingSpeed(piles, h)",
   handlerFunction: handle_minEatingSpeed,
 };

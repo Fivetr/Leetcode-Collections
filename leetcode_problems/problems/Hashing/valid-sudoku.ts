@@ -50,12 +50,12 @@ const starterCode = `/**
 * @param {character[][]} board
 * @return {boolean}
 */
-function isValidSudoku(board) {
+var isValidSudoku = function(board) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function isValidSudoku(board) {
+  solution: `var isValidSudoku = function(board) {
   let set = new Set();
 
   for (let r = 0; r < board.length; r++) {
@@ -147,6 +147,6 @@ export const ValidSudoku: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function isValidSudoku(",
+  starterFunctionName: "isValidSudoku(board)",
   handlerFunction: handle_IsValidSudoku,
 };

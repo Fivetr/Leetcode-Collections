@@ -35,12 +35,12 @@ const starterCode = `/**
 * @param {number[]} nums
 * @return {boolean}
 */
-function containsDuplicate(nums) {
+var containsDuplicate = function(nums) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function containsDuplicate(nums) {
+  solution: `var containsDuplicate = function(nums) {
   const myset = new Set();
   for (let i = 0; i < nums.length; i++){
       if (myset.has(nums[i])){
@@ -74,6 +74,7 @@ const handle_ContainsDuplicate = (fn: any) => {
     }
     return true;
   } catch (error: any) {
+    console.log(error);
     console.log("ContainsDuplicate handler function error");
     throw new Error(error);
   }
@@ -90,6 +91,6 @@ export const ContainsDuplicate: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function containsDuplicate(",
+  starterFunctionName: "containsDuplicate(nums)",
   handlerFunction: handle_ContainsDuplicate,
 };

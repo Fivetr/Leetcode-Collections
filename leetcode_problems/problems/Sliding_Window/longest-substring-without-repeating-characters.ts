@@ -42,13 +42,30 @@ const starterCode = `/**
 * @param {string} s
 * @return {number}
 */
-function lengthOfLongestSubstring(s) {
+var lengthOfLongestSubstring = function(s) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function lengthOfLongestSubstring(s) {
-
+  solution: `var lengthOfLongestSubstring = function(s) {
+  let set = new Set();
+  let left = 0, maxLength = 0;
+  if(s.length < 2) return s.length; 
+  for (let i = 0; i < s.length; i++) {
+      // Keep adding char to set until we found a duplicate 
+      // Remove the left most char until the duplicate char is removed 
+      // [a,b,c,b] => [c,b]
+      // set(a,b,c) => (c,b)
+      while (set.has(s[i])) {
+          set.delete(s[left])
+          left++;
+      }
+      set.add(s[i]);
+      // Update the maxlength every iteration
+      // [a,b,c,b], maxLength = 3
+      maxLength = Math.max(maxLength, i - left + 1)
+  }
+  return maxLength;
 };`,
   time_complexity: `n`,
   space_complexity: `n`,
@@ -76,7 +93,7 @@ const handle_lengthOfLongestSubstring = (fn: any) => {
 };
 
 export const LongestSubstringWithoutRepeatingCharacters: Problem = {
-  order: 2,
+  order: 3,
   id: "longest-substring-without-repeating-characters",
   title: "Longest Substring Without Repeating Characters",
   difficulty: "Medium",
@@ -86,6 +103,6 @@ export const LongestSubstringWithoutRepeatingCharacters: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function lengthOfLongestSubstring(",
+  starterFunctionName: "lengthOfLongestSubstring(s)",
   handlerFunction: handle_lengthOfLongestSubstring,
 };

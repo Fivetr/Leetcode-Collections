@@ -36,12 +36,12 @@ const starterCode = `/**
 * @param {number[]} nums
 * @return {number}
 */
-function longestConsecutive(nums) {
+var longestConsecutive = function(nums) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function longestConsecutive(nums) {
+  solution: `var longestConsecutive = function(nums) {
   const numSet = new Set(nums);
   let max_length = 0;
   
@@ -99,6 +99,6 @@ export const LongestConsectiveSequence: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function longestConsecutive(",
+  starterFunctionName: "longestConsecutive(nums)",
   handlerFunction: handle_LongestConsecutive,
 };

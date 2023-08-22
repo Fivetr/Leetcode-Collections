@@ -40,12 +40,12 @@ const starterCode = `/**
 * @param {number[]} temperatures
 * @return {number[]}
 */
-function dailyTemperatures(temperatures) {
+var dailyTemperatures = function(temperatures) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function dailyTemperatures(temperatures) {
+  solution: `var dailyTemperatures = function(temperatures) {
   let stack = [], ans = Array(temperatures.length).fill(0);
   for(let i = 0; i < temperatures.length; i++) {
       while(stack.length && temperatures[stack[stack.length - 1]] < temperatures[i]) {
@@ -101,6 +101,6 @@ export const DailyTemperatures: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function dailyTemperatures(",
+  starterFunctionName: "dailyTemperatures(temperatures)",
   handlerFunction: handle_DailyTemperatures,
 };

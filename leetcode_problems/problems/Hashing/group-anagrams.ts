@@ -41,12 +41,12 @@ const starterCode = `/**
 * @param {string[]} strs
 * @return {string[][]}
 */
-function groupAnagrams(strs) {
+var groupAnagrams = function(strs) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function groupAnagrams(strs) {
+  solution: `var groupAnagrams = function(strs) {
   let map = {}
   for(let s of strs){
       const key = Array(26).fill(0)
@@ -108,6 +108,6 @@ export const GroupAnagrams: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function groupAnagrams(",
+  starterFunctionName: "groupAnagrams(strs)",
   handlerFunction: handle_GroupAnagrams,
 };

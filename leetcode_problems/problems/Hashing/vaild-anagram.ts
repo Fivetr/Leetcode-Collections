@@ -35,23 +35,21 @@ const starterCode = `/**
 * @param {string} t
 * @return {boolean}
 */
-function isAnagram(s, t) {
+var isAnagram = function(s, t) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function isAnagram(s, t) {
+  solution: `var isAnagram = function(s, t) {
   if(s.length != t.length){
       return false
   }
-
   const countS = {}
   const countT = {}
   for(let i = 0; i < s.length; i++){
       countS[s[i]] = (countS[s[i]] || 0) + 1
       countT[t[i]] = (countT[t[i]] || 0) + 1
   }
-
   for (let key in countS){
       if(countS[key] != countT[key]){
           return false
@@ -96,6 +94,6 @@ export const ValidAnagram: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function isAnagram(",
+  starterFunctionName: "isAnagram(s, t)",
   handlerFunction: handle_IsAnagram,
 };

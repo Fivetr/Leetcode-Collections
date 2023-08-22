@@ -58,16 +58,46 @@ const starterCode = `/**
 * @param {string} t
 * @return {string}
 */
-function minWindow(s, t) {
+var minWindow = function(s, t) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function minWindow(s, t) {
-
+  solution: `var minWindow = function(s, t) {
+    // Store the count of required string s1
+    const count = {};
+    let targetLength = t.length;
+    let res = [];
+    let min = Infinity;
+    for (let char of t) {
+      count[char] = (count[char] || 0) + 1;
+    }
+    for (let right = 0, left = 0; right < s.length; right++) {
+      // If we found s character in t then decrease targetLength
+      if (count[s[right]] > 0) {
+        targetLength--;
+      }
+      count[s[right]]--;
+      // When we meet the conditions, targetlength == 0
+      while (!targetLength) {
+        // Update the minimum substring length
+        if (right - left < min) {
+          min = right - left;
+          res = [left, right];
+        }
+        // Move the left pointer to the right until the conditions is no longer satisfied
+        // targetlength != 0
+        if (count[s[left]] >= 0) {
+          targetLength++;
+        }
+        count[s[left]]++;
+        left++;
+      }
+    }
+    return s.slice(res[0], res[1] + 1);
 };`,
   time_complexity: `n`,
-  space_complexity: `n`,
+  space_complexity: `s`,
 };
 
 // checks if the user has the correct code
@@ -93,7 +123,7 @@ const handle_minWindow = (fn: any) => {
 };
 
 export const MinimumWindowSubstring: Problem = {
-  order: 5,
+  order: 6,
   id: "minimum-window-substring",
   title: "Minimum Window Substring",
   difficulty: "Hard",
@@ -103,6 +133,6 @@ export const MinimumWindowSubstring: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function minWindow(",
+  starterFunctionName: "minWindow(s, t)",
   handlerFunction: handle_minWindow,
 };

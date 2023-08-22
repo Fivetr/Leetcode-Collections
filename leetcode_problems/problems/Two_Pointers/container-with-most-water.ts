@@ -1,5 +1,6 @@
 import assert from "assert";
 import { Problem } from "@/types/index";
+import img1 from "./images/container_with_most_water_1.jpg";
 
 const problemStatement = `
 <p class='mt-4'>
@@ -26,6 +27,8 @@ const examples = [
     outputText: "49",
     explanation:
       "The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.",
+    img: img1.src,
+    img_size: 700,
   },
   {
     id: 2,
@@ -50,16 +53,33 @@ const starterCode = `/**
 * @param {number[]} height
 * @return {number}
 */
-function maxArea(height) {
+var maxArea = function(height) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function maxArea(height) {
-
+  solution: `var maxArea = function(height) {
+  let n = height.length;
+  // declare two pointers at the start and end of the array
+  let left = 0, right = n - 1;
+  let max_area = 0;
+  while (left < right) {
+    // Calculate the area between the lines
+    // width: right - left
+    // height: min(height[left], height[right])
+    let area = Math.min(height[left], height[right]) * (right - left);
+    max_area = Math.max(max_area, area);
+    // shift the pointer with smaller height
+    if (height[left] < height[right]) {
+      left++;
+    } else {
+      right--;
+    }
+  }
+  return max_area;
 };`,
   time_complexity: `n`,
-  space_complexity: `n`,
+  space_complexity: `1`,
 };
 
 // checks if the user has the correct code
@@ -97,6 +117,6 @@ export const ContainerWithMostWater: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function maxArea(",
+  starterFunctionName: "maxArea(height)",
   handlerFunction: handle_maxArea,
 };

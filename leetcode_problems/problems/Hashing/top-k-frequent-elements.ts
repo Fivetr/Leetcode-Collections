@@ -39,24 +39,21 @@ const starterCode = `/**
 * @param {number} k
 * @return {number[]}
 */
-function topKFrequent(nums, k) {
+var topKFrequent = function(nums, k) {
   // Write your code here
   
 };`;
 
 const solution = {
-  solution: `function topKFrequent(nums, k) {
+  solution: `var topKFrequent = function(nums, k) {
   const counts = {};
   const freq = Array.from(Array(nums.length + 1), () => new Array());
-  
   for (let n of nums) {
     counts[n] = (counts[n] || 0) + 1;
   }
-  
   for (let count in counts) {
     freq[counts[count]].push(parseInt(count));
   }
-    
   const res = [];
   for (let i = freq.length - 1; i > 0; i--) {
     for (let n of freq[i]) {
@@ -103,6 +100,6 @@ export const TopKFrequentElements: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function topKFrequent(",
+  starterFunctionName: "topKFrequent(nums, k)",
   handlerFunction: handle_TopKFrequent,
 };

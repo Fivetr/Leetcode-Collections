@@ -28,12 +28,12 @@ const starterCode = `/**
 * @param {number[]} nums
 * @return {boolean}
 */
-function generateParenthesis(n) {
+var generateParenthesis = function(n) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function generateParenthesis(n) {
+  solution: `var generateParenthesis = function(n) {
   let res = []
   let iterate = (str, open, close) =>{
       if(open > n || close >n || close >open) return;
@@ -86,6 +86,6 @@ export const GenerateParentheses: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function generateParenthesis(",
+  starterFunctionName: "generateParenthesis(n)",
   handlerFunction: handle_GenerateParentheses,
 };

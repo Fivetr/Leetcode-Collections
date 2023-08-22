@@ -48,12 +48,12 @@ const starterCode = `/**
 * @param {number} target
 * @return {number[]}
 */
-function twoSum(nums, target) {
+var twoSum = function(nums, target) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function twoSum(nums, target) {
+  solution: `var twoSum = function(nums, target) {
   let map = {};
   for(let i = 0 ; i < nums.length ; i++){
     let diff = target - nums[i];
@@ -108,6 +108,6 @@ export const twoSum: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function twoSum(",
+  starterFunctionName: "twoSum(nums, target)",
   handlerFunction: handle_TwoSum,
 };

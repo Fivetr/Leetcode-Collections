@@ -26,6 +26,7 @@ export type Problem = {
   difficulty: string;
   category: string;
   solution: Solution;
+  extraParams?: string;
 };
 
 export type problem_MetaData = {

@@ -40,13 +40,13 @@ const starterCode = `/**
 * @param {number[]} heights
 * @return {number}
 */
-function largestRectangleArea(heights) {
+var largestRectangleArea = function(heights) {
   // Write your code here
   
 };`;
 
 const solution = {
-  solution: `function largestRectangleArea(heights) {
+  solution: `var largestRectangleArea = function(heights) {
   //To make sure we processed all the heights
   heights.push(0)  
   /* Initialize stack to store height, and the index
@@ -111,6 +111,6 @@ export const LargestRectangleinHistogram: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function largestRectangleArea(",
+  starterFunctionName: "largestRectangleArea(heights)",
   handlerFunction: handle_LargestRectangleArea,
 };

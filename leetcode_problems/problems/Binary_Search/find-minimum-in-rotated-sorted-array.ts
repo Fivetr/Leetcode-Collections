@@ -72,16 +72,30 @@ const starterCode = `/**
 * @param {number[]} nums
 * @return {number}
 */
-function findMin(nums) {
+var findMin = function(nums) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `function findMin(nums) {
-
+  solution: `var findMin = function(nums) {
+  /* Initialize two pointers, left and right, representing 
+     the start and end indices of the search space */
+  let left = 0, right = nums.length - 1;
+  while (left < right) {
+      // Calculate the midpoint
+      let mid = Math.floor((right + left) / 2);
+      // The minimum element lies in the right half of the array.
+      if (nums[mid] > nums[right]) {
+          left = mid + 1;
+        // The minimum element lies in the left half of the array.
+      } else {
+          right = mid;
+      }
+  }
+    return nums[left];
 };`,
-  time_complexity: `n`,
-  space_complexity: `n`,
+  time_complexity: `logn`,
+  space_complexity: `1`,
 };
 
 // checks if the user has the correct code
@@ -120,6 +134,6 @@ export const FindMinimumInRotatedSortedArray: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "function findMin(",
+  starterFunctionName: "findMin(nums)",
   handlerFunction: handle_findMin,
 };
