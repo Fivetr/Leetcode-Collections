@@ -1,5 +1,6 @@
 import assert from "assert";
 import { Problem } from "@/types/index";
+import { MinPriorityQueue } from "@datastructures-js/priority-queue";
 
 const problemStatement = `
 <p class='mt-4'>
@@ -42,10 +43,23 @@ var minMeetingRooms = function(intervals) {
 
 const solution = {
   solution: `var minMeetingRooms = function(intervals) {
-
+  intervals.sort((a, b) => a[0] - b[0]);
+  const queue = new MinPriorityQueue();
+  let rooms = 0;
+  for (let i = 0; i < intervals.length; i++) {
+    const interval = intervals[i];
+    if (!queue.size()) rooms++;
+    else {
+      const front = queue.front();
+      if (front <= interval[0]) queue.dequeue();
+      else rooms++;
+    }
+    queue.enqueue(interval[1]);
+  }
+  return rooms;
 };`,
-  time_complexity: `n`,
-  space_complexity: `1`,
+  time_complexity: `nlogn`,
+  space_complexity: `n`,
 };
 
 // checks if the user has the correct code
@@ -65,11 +79,11 @@ const handle_MeetingRooms2 = (fn: any) => {
     ];
 
     const answers = [2, 1];
-
+    let minPriorityQueue = MinPriorityQueue;
     // loop all tests to check if the user's code is correct
     for (let i = 0; i < intervals.length; i++) {
       // result is the output of the user's function and answer is the expected output
-      const result = fn(intervals[i]);
+      const result = fn(intervals[i], minPriorityQueue);
       assert.deepStrictEqual(result, answers[i]);
     }
     return true;
@@ -91,5 +105,6 @@ export const MeetingRooms2: Problem = {
   starterCode: starterCode,
   solution: solution,
   starterFunctionName: "minMeetingRooms(intervals)",
+  extraParams: "minMeetingRooms(intervals, MinPriorityQueue)",
   handlerFunction: handle_MeetingRooms2,
 };

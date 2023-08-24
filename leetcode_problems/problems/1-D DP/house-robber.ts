@@ -3,18 +3,14 @@ import { Problem } from "@/types/index";
 
 const problemStatement = `
 <p class='mt-4'>
-There are <code>n</code> gas stations along a circular route, where the amount of gas at 
-the <code>ith</code> station is <code>gas[i]</code>.
+You are a professional robber planning to rob houses along a street. Each house 
+has a certain amount of money stashed, the only constraint stopping you from robbing 
+each of them is that adjacent houses have security systems connected and 
+<strong>it will automatically contact the police if two adjacent houses were broken into on the same night</strong>.
 </p>
 <p class='mt-4'>
-You have a car with an unlimited gas tank and it costs <code>cost[i]</code> of gas to travel from 
-the <code>i<sup>th</sup></code> station to its next <code>(i + 1)<sup>th</sup></code> station. You begin the journey with an empty tank at one of the gas stations.
-</p>
-<p class='mt-4'>
-Given two integer arrays <code>gas</code> and <code>cost</code>, return 
-<em>the starting gas station's index if you can travel around the circuit once in the 
-clockwise direction, otherwise return</em> <code>-1</code>. If there exists a 
-solution, it is <strong>guaranteed</strong> to be <strong>unique</strong>
+Given an integer array <code>nums</code> representing the amount of money of each house, 
+return <em>the maximum amount of money you can rob tonight <strong>without alerting the police</strong></em>.
 </p>
 
 `;
@@ -22,60 +18,49 @@ solution, it is <strong>guaranteed</strong> to be <strong>unique</strong>
 const examples = [
   {
     id: 1,
-    inputText: "gas = [1,2,3,4,5], cost = [3,4,5,1,2]",
-    outputText: "3",
+    inputText: "nums = [1,2,3,1]",
+    outputText: "4",
     explanation:
-      "Start at station 3 (index 3) and fill up with 4 unit of gas. Your tank = 0 + 4 = 4\nTravel to station 4. Your tank = 4 - 1 + 5 = 8\nTravel to station 0. Your tank = 8 - 2 + 1 = 7\nTravel to station 1. Your tank = 7 - 3 + 2 = 6\nTravel to station 2. Your tank = 6 - 4 + 3 = 5\nTravel to station 3. The cost is 5. Your gas is just enough to travel back to station 3.\nTherefore, return 3 as the starting index.",
+      "Rob house 1 (money = 1) and then rob house 3 (money = 3).\nTotal amount you can rob = 1 + 3 = 4.",
   },
   {
     id: 2,
-    inputText: "gas = [2,3,4], cost = [3,4,3]",
-    outputText: "-1",
+    inputText: "nums = [2,7,9,3,1]",
+    outputText: "12",
     explanation:
-      "You can't start at station 0 or 1, as there is not enough gas to travel to the next station.\nLet's start at station 2 and fill up with 4 unit of gas. Your tank = 0 + 4 = 4\nTravel to station 0. Your tank = 4 - 3 + 2 = 3\nTravel to station 1. Your tank = 3 - 3 + 3 = 3\nYou cannot travel back to station 2, as it requires 4 unit of gas but you only have 3.\nTherefore, you can't travel around the circuit once no matter where you start.",
+      "Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).\nTotal amount you can rob = 2 + 9 + 1 = 12.",
   },
 ];
 
 const constraints = `
 <li class='mt-3 text-sm'>
-<code>n == gas.length == cost.length</code>
+<code>1 ≤ nums.length ≤ 100</code>
 </li>  
 <li class='mt-3 text-sm'>
-<code>1 ≤ n ≤ 10<sup>5</sup></code>
-</li>  
-<li class='mt-3 text-sm'>
-<code>0 ≤ gas[i], cost[i] ≤ 10<sup>4</sup></code>
+<code>0 ≤ nums[i] ≤ 400</code>
 </li>  
 `;
 
 const starterCode = `/**
-* @param {number[]} gas
-* @param {number[]} cost
+* @param {number[]} nums
 * @return {number}
 */
-var canCompleteCircuit = function(gas, cost) {
+var rob = function(nums) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `var canCompleteCircuit = function(gas, cost) {
-  /* Return -1 if sum of gas is less than sum of cost.
-     (Need enough gas to cover the cost to travel around the circuit once) */
-  if (gas.reduce((acc, item) => acc + item) < 
-      cost.reduce((acc, item) => acc + item)) return -1;
-  
-  let tank = 0, start = 0
-  /* If a position reached with a tank < 0, that means we should
-     reset the tank and try to start in the next position. */
-  for (let i = 0; i < gas.length; i++) {
-    const diff = gas[i] - cost[i]
-    tank += diff;
-    if (tank < 0) {
-      tank = 0;
-      start = i + 1;
-    }
+  solution: `var rob = function(nums) {
+  let robbedIdxPlus1 = 0;
+  let robbedIdxPlus2 = 0;
+  for (let i = nums.length - 1; i >= 0; i--) {
+    const sumIfSkipped = robbedIdxPlus1;
+    const sumIfRobbed = nums[i] + robbedIdxPlus2;
+    const maxRobbedAtIdx = Math.max(sumIfSkipped, sumIfRobbed);
+    robbedIdxPlus2 = robbedIdxPlus1;
+    robbedIdxPlus1 = maxRobbedAtIdx;
   }
-  return start;
+  return robbedIdxPlus1;
 };`,
   time_complexity: `n`,
   space_complexity: `1`,
@@ -85,21 +70,16 @@ const solution = {
 const handle_HouseRobber = (fn: any) => {
   // fn is the callback that user's code is passed into
   try {
-    const gas = [
-      [1, 2, 3, 4, 5],
-      [2, 3, 4],
+    const nums = [
+      [1, 2, 3, 1],
+      [2, 7, 9, 3, 1],
     ];
-    const costs = [
-      [3, 4, 5, 1, 2],
-      [3, 4, 3],
-    ];
-
-    const answers = [3, -1];
+    const answers = [4, 12];
 
     // loop all tests to check if the user's code is correct
-    for (let i = 0; i < gas.length; i++) {
+    for (let i = 0; i < nums.length; i++) {
       // result is the output of the user's function and answer is the expected output
-      const result = fn(gas[i], costs[i]);
+      const result = fn(nums[i]);
       assert.deepStrictEqual(result, answers[i]);
     }
     return true;
@@ -120,6 +100,6 @@ export const HouseRobber: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "canCompleteCircuit(gas, cost)",
+  starterFunctionName: "rob(nums)",
   handlerFunction: handle_HouseRobber,
 };

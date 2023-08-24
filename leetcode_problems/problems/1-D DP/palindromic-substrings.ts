@@ -3,18 +3,13 @@ import { Problem } from "@/types/index";
 
 const problemStatement = `
 <p class='mt-4'>
-There are <code>n</code> gas stations along a circular route, where the amount of gas at 
-the <code>ith</code> station is <code>gas[i]</code>.
+Given a <code>string s</code>, return <em>the number of <strong>palindromic substrings</strong> in it</em>.
 </p>
 <p class='mt-4'>
-You have a car with an unlimited gas tank and it costs <code>cost[i]</code> of gas to travel from 
-the <code>i<sup>th</sup></code> station to its next <code>(i + 1)<sup>th</sup></code> station. You begin the journey with an empty tank at one of the gas stations.
+A string is a <strong>palindrome</strong> when it reads the same backward as forward.
 </p>
 <p class='mt-4'>
-Given two integer arrays <code>gas</code> and <code>cost</code>, return 
-<em>the starting gas station's index if you can travel around the circuit once in the 
-clockwise direction, otherwise return</em> <code>-1</code>. If there exists a 
-solution, it is <strong>guaranteed</strong> to be <strong>unique</strong>
+A <strong>substring</strong> is a contiguous sequence of characters within the string.
 </p>
 
 `;
@@ -22,62 +17,59 @@ solution, it is <strong>guaranteed</strong> to be <strong>unique</strong>
 const examples = [
   {
     id: 1,
-    inputText: "gas = [1,2,3,4,5], cost = [3,4,5,1,2]",
+    inputText: `s = "abc"`,
     outputText: "3",
-    explanation:
-      "Start at station 3 (index 3) and fill up with 4 unit of gas. Your tank = 0 + 4 = 4\nTravel to station 4. Your tank = 4 - 1 + 5 = 8\nTravel to station 0. Your tank = 8 - 2 + 1 = 7\nTravel to station 1. Your tank = 7 - 3 + 2 = 6\nTravel to station 2. Your tank = 6 - 4 + 3 = 5\nTravel to station 3. The cost is 5. Your gas is just enough to travel back to station 3.\nTherefore, return 3 as the starting index.",
+    explanation: `Three palindromic strings: "a", "b", "c".`,
   },
   {
     id: 2,
-    inputText: "gas = [2,3,4], cost = [3,4,3]",
-    outputText: "-1",
-    explanation:
-      "You can't start at station 0 or 1, as there is not enough gas to travel to the next station.\nLet's start at station 2 and fill up with 4 unit of gas. Your tank = 0 + 4 = 4\nTravel to station 0. Your tank = 4 - 3 + 2 = 3\nTravel to station 1. Your tank = 3 - 3 + 3 = 3\nYou cannot travel back to station 2, as it requires 4 unit of gas but you only have 3.\nTherefore, you can't travel around the circuit once no matter where you start.",
+    inputText: `s = "aaa"`,
+    outputText: "6",
+    explanation: `Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa".`,
   },
 ];
 
 const constraints = `
 <li class='mt-3 text-sm'>
-<code>n == gas.length == cost.length</code>
+<code>1 ≤ s.length ≤ 1000</code>
 </li>  
 <li class='mt-3 text-sm'>
-<code>1 ≤ n ≤ 10<sup>5</sup></code>
-</li>  
-<li class='mt-3 text-sm'>
-<code>0 ≤ gas[i], cost[i] ≤ 10<sup>4</sup></code>
+<code>s</code> consists of lowercase English letters.
 </li>  
 `;
 
 const starterCode = `/**
-* @param {number[]} gas
-* @param {number[]} cost
+* @param {string} s
 * @return {number}
 */
-var canCompleteCircuit = function(gas, cost) {
+var countSubstrings = function(s) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `var canCompleteCircuit = function(gas, cost) {
-  /* Return -1 if sum of gas is less than sum of cost.
-     (Need enough gas to cover the cost to travel around the circuit once) */
-  if (gas.reduce((acc, item) => acc + item) < 
-      cost.reduce((acc, item) => acc + item)) return -1;
-  
-  let tank = 0, start = 0
-  /* If a position reached with a tank < 0, that means we should
-     reset the tank and try to start in the next position. */
-  for (let i = 0; i < gas.length; i++) {
-    const diff = gas[i] - cost[i]
-    tank += diff;
-    if (tank < 0) {
-      tank = 0;
-      start = i + 1;
-    }
+  solution: `var countSubstrings = function(s) {
+  let len = s.length, ans = 0
+  // Iterating through S and considering the index i to be the center of a series of potential palindromes.
+  for (let i = 0; i < len; i++) {
+    // two pointers
+    let j = i - 1, k = i
+    //  Identify how long the "center" is by moving the right-size pointer (k) forwards while checking for duplicate characters. 
+    while (k < len - 1 && s[k] === s[k+1]) k++
+    /* Instead of our center just being a single palindrome, it will be the Nth triangular 
+       number (defined as N * (N + 1) / 2) to account for all the smaller palindromes of which it's made. */
+    ans += (k - j) * (k - j + 1) / 2
+    i = k++
+    // Spread out in both directions from i; as long as S[j] == S[k]
+    // We'd know we had found a new palindrome and could continue spreading outward.
+    while (j >=0 && k < len && s[k] === s[j]){
+      j--
+      k++
+      ans++
+    } 
   }
-  return start;
+  return ans
 };`,
-  time_complexity: `n`,
+  time_complexity: `n<sup>2</sup>`,
   space_complexity: `1`,
 };
 
@@ -85,21 +77,13 @@ const solution = {
 const handle_PalindromicSubstrings = (fn: any) => {
   // fn is the callback that user's code is passed into
   try {
-    const gas = [
-      [1, 2, 3, 4, 5],
-      [2, 3, 4],
-    ];
-    const costs = [
-      [3, 4, 5, 1, 2],
-      [3, 4, 3],
-    ];
-
-    const answers = [3, -1];
+    const gas = ["abc", "aaa"];
+    const answers = [3, 6];
 
     // loop all tests to check if the user's code is correct
     for (let i = 0; i < gas.length; i++) {
       // result is the output of the user's function and answer is the expected output
-      const result = fn(gas[i], costs[i]);
+      const result = fn(gas[i]);
       assert.deepStrictEqual(result, answers[i]);
     }
     return true;
@@ -120,6 +104,6 @@ export const PalindromicSubstrings: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "canCompleteCircuit(gas, cost)",
+  starterFunctionName: "countSubstrings(s)",
   handlerFunction: handle_PalindromicSubstrings,
 };

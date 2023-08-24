@@ -49,9 +49,26 @@ var merge = function(intervals) {
 
 const solution = {
   solution: `var merge = function(intervals) {
-
+  let ans = [];
+  intervals.sort((a, b) => a[0] - b[0]);
+  let temp = intervals[0];
+  for (let i = 0; i < intervals.length; i++) {
+    // check for overlapping
+    if (intervals[i][0] <= temp[1]) {
+      // continue check for other possible overlapping
+      temp[1] = Math.max(temp[1], intervals[i][1]);
+    } else {
+      // no overlapping for temp interval
+      ans.push(temp);
+      // update temp to intervals i and check for overlapping with intervals comes after it.
+      temp = intervals[i];
+    }
+  }
+  // push the last interval
+  ans.push(temp);
+  return ans;
 };`,
-  time_complexity: `n`,
+  time_complexity: `nlogn`,
   space_complexity: `1`,
 };
 

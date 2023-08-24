@@ -45,9 +45,15 @@ var canAttendMeetings = function(intervals) {
 
 const solution = {
   solution: `var canAttendMeetings = function(intervals) {
-
+  intervals.sort((a, b) => a[0] - b[0]);
+  for(let i = 1; i < intervals.length; i++) {
+    const i1_end =  intervals[i - 1][1]
+    const i2_start = intervals[i][0]
+    if(i2_start < i1_end) return false;       
+  }
+  return true;
 };`,
-  time_complexity: `n`,
+  time_complexity: `nlogn`,
   space_complexity: `1`,
 };
 

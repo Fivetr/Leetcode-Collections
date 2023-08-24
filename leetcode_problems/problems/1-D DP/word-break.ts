@@ -3,107 +3,105 @@ import { Problem } from "@/types/index";
 
 const problemStatement = `
 <p class='mt-4'>
-There are <code>n</code> gas stations along a circular route, where the amount of gas at 
-the <code>ith</code> station is <code>gas[i]</code>.
+Given a string <code>s</code> and a dictionary of strings <code>wordDict</code>, return 
+<code>true</code> if <code>s</code> can be segmented into a space-separated sequence of one or more 
+dictionary words.
 </p>
 <p class='mt-4'>
-You have a car with an unlimited gas tank and it costs <code>cost[i]</code> of gas to travel from 
-the <code>i<sup>th</sup></code> station to its next <code>(i + 1)<sup>th</sup></code> station. You begin the journey with an empty tank at one of the gas stations.
+<strong>Note</strong> that the same word in the dictionary may be reused multiple times in the segmentation.
 </p>
-<p class='mt-4'>
-Given two integer arrays <code>gas</code> and <code>cost</code>, return 
-<em>the starting gas station's index if you can travel around the circuit once in the 
-clockwise direction, otherwise return</em> <code>-1</code>. If there exists a 
-solution, it is <strong>guaranteed</strong> to be <strong>unique</strong>
-</p>
-
 `;
 
 const examples = [
   {
     id: 1,
-    inputText: "gas = [1,2,3,4,5], cost = [3,4,5,1,2]",
-    outputText: "3",
-    explanation:
-      "Start at station 3 (index 3) and fill up with 4 unit of gas. Your tank = 0 + 4 = 4\nTravel to station 4. Your tank = 4 - 1 + 5 = 8\nTravel to station 0. Your tank = 8 - 2 + 1 = 7\nTravel to station 1. Your tank = 7 - 3 + 2 = 6\nTravel to station 2. Your tank = 6 - 4 + 3 = 5\nTravel to station 3. The cost is 5. Your gas is just enough to travel back to station 3.\nTherefore, return 3 as the starting index.",
+    inputText: `s = "leetcode", wordDict = ["leet","code"]`,
+    outputText: "true",
+    explanation: `Return true because "leetcode" can be segmented as "leet code".`,
   },
   {
     id: 2,
-    inputText: "gas = [2,3,4], cost = [3,4,3]",
-    outputText: "-1",
-    explanation:
-      "You can't start at station 0 or 1, as there is not enough gas to travel to the next station.\nLet's start at station 2 and fill up with 4 unit of gas. Your tank = 0 + 4 = 4\nTravel to station 0. Your tank = 4 - 3 + 2 = 3\nTravel to station 1. Your tank = 3 - 3 + 3 = 3\nYou cannot travel back to station 2, as it requires 4 unit of gas but you only have 3.\nTherefore, you can't travel around the circuit once no matter where you start.",
+    inputText: `s = "applepenapple", wordDict = ["apple","pen"]`,
+    outputText: "true",
+    explanation: `Return true because "applepenapple" can be segmented as "apple pen apple".\nNote that you are allowed to reuse a dictionary word.`,
+  },
+  {
+    id: 3,
+    inputText: `s = "catsandog", wordDict = ["cats","dog","sand","and","cat"]`,
+    outputText: "false",
   },
 ];
 
 const constraints = `
 <li class='mt-3 text-sm'>
-<code>n == gas.length == cost.length</code>
+<code>1 ≤ s.length ≤ 300</code>
 </li>  
 <li class='mt-3 text-sm'>
-<code>1 ≤ n ≤ 10<sup>5</sup></code>
+<code>1 ≤ wordDict.length ≤ 1000</code>
 </li>  
 <li class='mt-3 text-sm'>
-<code>0 ≤ gas[i], cost[i] ≤ 10<sup>4</sup></code>
+<code>1 ≤ wordDict[i].length ≤ 20</code>
+</li>  
+<li class='mt-3 text-sm'>
+<code>s</code> and <code>wordDict[i]</code> consist of only lowercase English letters.
+</li>  
+<li class='mt-3 text-sm'>
+All the strings of <code>wordDict</code> are <strong>unique</strong>.
 </li>  
 `;
 
 const starterCode = `/**
-* @param {number[]} gas
-* @param {number[]} cost
-* @return {number}
+* @param {string} s
+* @param {string[]} wordDict
+* @return {boolean}
 */
-var canCompleteCircuit = function(gas, cost) {
+var wordBreak = function(s, wordDict) {
   // Write your code here
 };`;
 
 const solution = {
-  solution: `var canCompleteCircuit = function(gas, cost) {
-  /* Return -1 if sum of gas is less than sum of cost.
-     (Need enough gas to cover the cost to travel around the circuit once) */
-  if (gas.reduce((acc, item) => acc + item) < 
-      cost.reduce((acc, item) => acc + item)) return -1;
-  
-  let tank = 0, start = 0
-  /* If a position reached with a tank < 0, that means we should
-     reset the tank and try to start in the next position. */
-  for (let i = 0; i < gas.length; i++) {
-    const diff = gas[i] - cost[i]
-    tank += diff;
-    if (tank < 0) {
-      tank = 0;
-      start = i + 1;
+  solution: `var wordBreak = function(s, wordDict) {
+  let n = s.length;
+  let dp = new Array(n + 1).fill(false);
+  dp[0] = true;
+  let max_len = Math.max(...wordDict.map(word => word.length));
+  for (let i = 1; i <= n; i++) {
+    for (let j = i - 1; j >= Math.max(i - max_len - 1, 0); j--) {
+      if (dp[j] && wordDict.includes(s.substring(j, i))) {
+        dp[i] = true;
+        break;
+      }
     }
   }
-  return start;
+  return dp[n];
 };`,
-  time_complexity: `n`,
-  space_complexity: `1`,
+  time_complexity: `n * m`,
+  space_complexity: `n`,
 };
 
 // checks if the user has the correct code
 const handle_WordBreak = (fn: any) => {
   // fn is the callback that user's code is passed into
   try {
-    const gas = [
-      [1, 2, 3, 4, 5],
-      [2, 3, 4],
-    ];
-    const costs = [
-      [3, 4, 5, 1, 2],
-      [3, 4, 3],
+    const s = ["leetcode", "applepenapple", "catsandog"];
+    const wordDict = [
+      ["leet", "code"],
+      ["apple", "pen"],
+      ["cats", "dog", "sand", "and", "cat"],
     ];
 
-    const answers = [3, -1];
+    const answers = [true, true, false];
 
     // loop all tests to check if the user's code is correct
-    for (let i = 0; i < gas.length; i++) {
+    for (let i = 0; i < s.length; i++) {
       // result is the output of the user's function and answer is the expected output
-      const result = fn(gas[i], costs[i]);
+      const result = fn(s[i], wordDict[i]);
+      console.log(result);
       assert.deepStrictEqual(result, answers[i]);
     }
     return true;
   } catch (error: any) {
+    console.log(error);
     console.log("WordBreak handler function error");
     throw new Error(error);
   }
@@ -120,6 +118,6 @@ export const WordBreak: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "canCompleteCircuit(gas, cost)",
+  starterFunctionName: "wordBreak(s, wordDict)",
   handlerFunction: handle_WordBreak,
 };

@@ -46,24 +46,14 @@ var lengthOfLIS = function(nums) {
 
 const solution = {
   solution: `var lengthOfLIS = function(nums) {
-  let dp = new Array(nums.length).fill(1);
-  let longest = 1;
-  for (let i = 1; i < nums.length; i++) {
-    for (let j = 0; j < i; j++) {
-      if (nums[j] < nums[i]) {
-        dp[i] = Math.max(dp[i], dp[j]+1);
-        longest = Math.max(longest, dp[i]);
-      }
-    }
-  }
-  return longest;
+
 };`,
-  time_complexity: `n<sup>2</sup>`,
-  space_complexity: `n`,
+  time_complexity: `n`,
+  space_complexity: `1`,
 };
 
 // checks if the user has the correct code
-const handle_LongestIncreasingSubsequence = (fn: any) => {
+const handle_MultiplyString = (fn: any) => {
   // fn is the callback that user's code is passed into
   try {
     const nums = [
@@ -82,22 +72,22 @@ const handle_LongestIncreasingSubsequence = (fn: any) => {
     }
     return true;
   } catch (error: any) {
-    console.log("LongestIncreasingSubsequence handler function error");
+    console.log("MultiplyString handler function error");
     throw new Error(error);
   }
 };
 
-export const LongestIncreasingSubsequence: Problem = {
-  order: 11,
-  id: "longest-increasing-subsequence",
-  title: "Longest Increasing Subsequence",
+export const MultiplyString: Problem = {
+  order: 7,
+  id: "multiply-strings",
+  title: "Multiply Strings",
   difficulty: "Medium",
-  category: "1-D DP",
+  category: "Math",
   problemStatement: problemStatement,
   examples: examples,
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
   starterFunctionName: "lengthOfLIS(nums)",
-  handlerFunction: handle_LongestIncreasingSubsequence,
+  handlerFunction: handle_MultiplyString,
 };

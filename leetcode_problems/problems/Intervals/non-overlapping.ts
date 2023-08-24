@@ -50,16 +50,28 @@ const constraints = `
 const starterCode = `/**
 * @param {number[][]} intervals
 * @return {number}
-*//
+*/
 var eraseOverlapIntervals = function(intervals) {
   // Write your code here
 };`;
 
 const solution = {
   solution: `var eraseOverlapIntervals = function(intervals) {
-
+  // sort by their end time
+  intervals.sort((a, b) => a[1] - b[1]); 
+  let num_removed = 0, prev_interval_end = intervals[0][1]; 
+  for (let i = 1; i < intervals.length; i++) { 
+    // found overlapping intervals
+    if (intervals[i][0] < prev_interval_end) { 
+      num_removed++; 
+    // not overlap, update the pointer 
+    } else { 
+      prev_interval_end = intervals[i][1]; 
+    } 
+  } 
+  return num_removed;
 };`,
-  time_complexity: `n`,
+  time_complexity: `nlogn`,
   space_complexity: `1`,
 };
 
@@ -91,6 +103,7 @@ const handle_NonOverlappingIntervals = (fn: any) => {
     for (let i = 0; i < intervals.length; i++) {
       // result is the output of the user's function and answer is the expected output
       const result = fn(intervals[i]);
+      console.log(result);
       assert.deepStrictEqual(result, answers[i]);
     }
     return true;

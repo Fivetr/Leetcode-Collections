@@ -46,6 +46,7 @@ function CodeEditorConsoleContainer({
     try {
       // userCode = userCode.slice(userCode.indexOf(startFunction));
       // const cb = new Function(`return ${userCode}`)();
+
       let params;
       extraParams
         ? (params = extraParams.slice(extraParams.indexOf("(")))

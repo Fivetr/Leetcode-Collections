@@ -67,7 +67,31 @@ var insert = function(intervals, newInterval) {
 
 const solution = {
   solution: `var insert = function(intervals, newInterval) {
-
+  const res = [];
+  let [mStart, mEnd] = newInterval;
+  let pushed = false;
+  for (let [start, end] of intervals) {
+    // the intervals is in front of the newInterval
+    if (end < mStart) {
+      res.push([start, end]);
+    // the intervals is behind the newInterval
+    // implies any intervals comes after current intervals will also be behind newInterval
+    // implies there will be no overlapping intervals with newInterval\
+    // push the newInterval to result 
+    } else if (start > mEnd) {
+      if (!pushed) res.push([mStart, mEnd]);
+        pushed = true;
+        res.push([start, end]);
+      // there is a overlap
+      // merge the two intervals, check for possible overlap  
+    } else {
+      mStart = Math.min(start, mStart);
+      mEnd = Math.max(end, mEnd);
+    }
+  }
+  // push the NewInterval if all the intervals are infront of it
+  if (!pushed) res.push([mStart, mEnd]);
+  return res;
 };`,
   time_complexity: `n`,
   space_complexity: `1`,

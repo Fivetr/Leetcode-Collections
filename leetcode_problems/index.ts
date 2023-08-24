@@ -89,7 +89,6 @@ import {
   InsertInterval,
   MergeIntervals,
   NonOverlappingIntervals,
-  MinimumInterval,
 } from "./problems/Intervals";
 import {
   ClimbingStairs,
@@ -105,6 +104,29 @@ import {
   LongestIncreasingSubsequence,
   PartitionEqualSubsetSum,
 } from "./problems/1-D DP";
+import {
+  UniquePaths,
+  LongestCommonSubsequence,
+  BestTimeToBuyAndSellStockWithCooldown,
+  CoinChange2,
+  TargetSum,
+  EditDistance,
+  LongestIncreasingPathInAMatrix,
+  InterLeavingString,
+  BurstBalloons,
+  DistinctSubsequences,
+  RegularExpressionMatching,
+} from "./problems/2-D DP";
+import {
+  HappyNumber,
+  PlusOne,
+  RotateImage,
+  SpiralMatrix,
+  SetMatrixZeroes,
+  Pow,
+  MultiplyString,
+  DetectSquares,
+} from "./problems/Math";
 interface ProblemMap {
   [key: string]: Problem;
 }
@@ -184,7 +206,6 @@ export const problems: ProblemMap = {
   "insert-interval": InsertInterval,
   "merge-intervals": MergeIntervals,
   "non-overlapping-intervals": NonOverlappingIntervals,
-  "minimum-interval-to-include-each-query": MinimumInterval,
   "climbing-stairs": ClimbingStairs,
   "min-cost-climbing-stairs": MinCostClimbingStairs,
   "house-robber": HouseRobber,
@@ -197,4 +218,28 @@ export const problems: ProblemMap = {
   "word-break": WordBreak,
   "longest-increasing-subsequence": LongestIncreasingSubsequence,
   "partition-equal-subset-sum": PartitionEqualSubsetSum,
+  "unique-paths": UniquePaths,
+  "longest-common-subsequence": LongestCommonSubsequence,
+  "best-time-to-buy-and-sell-stock-with-cooldown":
+    BestTimeToBuyAndSellStockWithCooldown,
+  "coin-change-2": CoinChange2,
+  "target-sum": TargetSum,
+  "interleaving-string": InterLeavingString,
+  "edit-distance": EditDistance,
+  "longest-increasing-path-in-a-matrix": LongestIncreasingPathInAMatrix,
+  "burst-balloons": BurstBalloons,
+  "distinct-subsequences": DistinctSubsequences,
+  "regular-expression-matching": RegularExpressionMatching,
+  "happy-number": HappyNumber,
+  "plus-one": PlusOne,
+  "rotate-image": RotateImage,
+  "spiral-matrix": SpiralMatrix,
+  "set-matrix-zeroes": SetMatrixZeroes,
+  pow: Pow,
+  "multiply-strings": MultiplyString,
+  "detect-squares": DetectSquares,
 };
+// SetMatrixZeroes,
+// Pow,
+// MultiplyString,
+// DetectSquares,
