@@ -32,6 +32,12 @@ export class LinkedList {
     this.tail = node;
     return node;
   }
+
+  public insert(node: any) {
+    if (this.head !== null && this.tail !== null) {
+      this.tail.next = node;
+    }
+  }
 }
 
 export function createLinkedList(values: number[]): LinkedList {
@@ -52,4 +58,18 @@ export function getListValues(list: Node | null): (number | null)[] {
     current = current.next;
   }
   return values;
+}
+
+export function createCycleList(values: number[], pos: number): LinkedList {
+  const head = new LinkedList(values[0]);
+  let node;
+  for (let i = 0; i < values.length; i++) {
+    const currentNode = head.append(values[i]);
+    if (i === pos) {
+      node = currentNode;
+    }
+  }
+  if (pos === -1) return head;
+  head.insert(node);
+  return head;
 }

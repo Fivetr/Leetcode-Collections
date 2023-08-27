@@ -49,7 +49,19 @@ var maxProfit = function(prices) {
 
 const solution = {
   solution: `var maxProfit = function(prices) {
-
+  // initializaiton
+  let [coolDown, sell, hold] = [0, 0, Number.NEGATIVE_INFINITY];
+  for( let stockPrice_Day_i of prices){
+    let [prevCoolDown, prevSell, prevHold] = [coolDown, sell, hold];
+    // Max profit of cooldown on Day i comes from either cool down of Day_i-1, or sell out of Day_i-1 and today Day_i is cooling day
+    coolDown = Math.max(prevCoolDown, prevSell);
+    // Max profit of sell on Day_i comes from hold of Day_i-1 and sell on Day_i
+    sell = prevHold + stockPrice_Day_i;
+    //  Max profit of hold on Day_i comes from either hold of Day_i-1, or cool down on Day_i-1 and buy on Day_i
+    hold = Math.max( prevHold, prevCoolDown - stockPrice_Day_i );
+  }
+  // The action of final trading day must be either sell or cool down
+  return Math.max(sell, coolDown);
 };`,
   time_complexity: `n`,
   space_complexity: `1`,
@@ -59,18 +71,14 @@ const solution = {
 const handle_BestTimeToBuyAndSellStockWithCooldown = (fn: any) => {
   // fn is the callback that user's code is passed into
   try {
-    const nums = [
-      [10, 9, 2, 5, 3, 7, 101, 18],
-      [0, 1, 0, 3, 2, 3],
-      [7, 7, 7, 7, 7, 7, 7],
-    ];
+    const prices = [[1, 2, 3, 0, 2], [1]];
 
-    const answers = [4, 4, 1];
+    const answers = [3, 0];
 
     // loop all tests to check if the user's code is correct
-    for (let i = 0; i < nums.length; i++) {
+    for (let i = 0; i < prices.length; i++) {
       // result is the output of the user's function and answer is the expected output
-      const result = fn(nums[i]);
+      const result = fn(prices[i]);
       assert.deepStrictEqual(result, answers[i]);
     }
     return true;

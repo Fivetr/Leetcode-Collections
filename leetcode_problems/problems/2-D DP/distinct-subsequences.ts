@@ -44,10 +44,19 @@ var numDistinct = function(s, t) {
 
 const solution = {
   solution: `var numDistinct = function(s, t) {
-
+  const len1 = s.length //lenght of s
+  const len2 = t.length //length of t
+  let res = new Array(len2 + 1).fill(0) //create the dp Array
+  res[0] = 1   
+  for(let n = 1; n <= len1; n++){
+    for(let m = n; m >= 1; m--){
+      if(s[n - 1] === t[m - 1]) res[m] = (res[m - 1] + res[m])
+    }
+  }
+  return res[len2]
 };`,
-  time_complexity: `n`,
-  space_complexity: `1`,
+  time_complexity: `m * n`,
+  space_complexity: `n`,
 };
 
 // checks if the user has the correct code
@@ -73,7 +82,7 @@ const handle_DistinctSubsequences = (fn: any) => {
 };
 
 export const DistinctSubsequences: Problem = {
-  order: 10,
+  order: 8,
   id: "distinct-subsequences",
   title: "Distinct Subsequences",
   difficulty: "Hard",

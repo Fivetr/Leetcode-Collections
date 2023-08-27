@@ -53,9 +53,22 @@ var rotate = function(matrix){
 
 const solution = {
   solution: `var rotate = function(matrix) {
-
+  let N = matrix.length;
+  // Traverse each cycle
+  for (i = 0; i < parseInt(N / 2); i++) {
+    for (j = i; j < N - i - 1; j++) {
+      // Swap elements of each cycle
+      // in clockwise direction
+      var temp = matrix[i][j];
+      matrix[i][j] = matrix[N - 1 - j][i];
+      matrix[N - 1 - j][i] = matrix[N - 1 - i][N - 1 - j];
+      matrix[N - 1 - i][N - 1 - j] = matrix[j][N - 1 - i];
+      matrix[j][N - 1 - i] = temp;
+    }
+  }
+  return matrix;
 };`,
-  time_complexity: `n`,
+  time_complexity: `n<sup>2</sup>`,
   space_complexity: `1`,
 };
 

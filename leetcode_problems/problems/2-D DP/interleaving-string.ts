@@ -74,10 +74,34 @@ var isInterleave = function(s1, s2, s3) {
 
 const solution = {
   solution: `var isInterleave = function(s1, s2, s3) {
-
+  // Check if the total length of s1 and s2 is equal to s3
+  if (s1.length + s2.length !== s3.length) {
+    return false;
+  }
+  // Create a 2D dynamic programming array dp
+  const dp = new Array(s1.length + 1).fill(false).map(() => new Array(s2.length + 1).fill(false));
+  // Base case: Both s1 and s2 are empty, and s3 is also empty
+  dp[0][0] = true;
+  // Fill the first column of dp using s1 and s3
+  for (let i = 1; i <= s1.length; i++) {
+    dp[i][0] = dp[i - 1][0] && s1[i - 1] === s3[i - 1];
+  }
+  // Fill the first row of dp using s2 and s3
+  for (let j = 1; j <= s2.length; j++) {
+    dp[0][j] = dp[0][j - 1] && s2[j - 1] === s3[j - 1];
+  }
+  // Fill the rest of the dp array based on character matching logic
+  for (let i = 1; i <= s1.length; i++) {
+    for (let j = 1; j <= s2.length; j++) {
+      dp[i][j] = (dp[i - 1][j] && s1[i - 1] === s3[i + j - 1]) ||
+          (dp[i][j - 1] && s2[j - 1] === s3[i + j - 1]);
+    }
+  }
+  // Return whether the last cell of dp is true, indicating s3 can be formed by interleaving s1 and s2
+  return dp[s1.length][s2.length];
 };`,
-  time_complexity: `n`,
-  space_complexity: `1`,
+  time_complexity: `m * n`,
+  space_complexity: `m * n`,
 };
 
 // checks if the user has the correct code
@@ -104,7 +128,7 @@ const handle_InterLeavingString = (fn: any) => {
 };
 
 export const InterLeavingString: Problem = {
-  order: 6,
+  order: 5,
   id: "interleaving-string",
   title: "Interleaving String",
   difficulty: "Medium",

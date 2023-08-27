@@ -41,7 +41,14 @@ import {
   SlidingWindowMaximum,
   BestTimeToBuyAndSellStock2,
 } from "./problems/Sliding_Window";
-import { ReverseLinkedList, MergeTwoSortedLists } from "./problems/Linked_List";
+import {
+  ReverseLinkedList,
+  MergeTwoSortedLists,
+  LinkedListCycle,
+  RemoveNthNodeFromEndOfList,
+  AddTwoNumbers,
+  FindTheDuplicateNumber,
+} from "./problems/Linked_List";
 import {
   LastStoneWeight,
   KClosestPointToOrigin,
@@ -109,9 +116,7 @@ import {
   LongestCommonSubsequence,
   BestTimeToBuyAndSellStockWithCooldown,
   CoinChange2,
-  TargetSum,
   EditDistance,
-  LongestIncreasingPathInAMatrix,
   InterLeavingString,
   BurstBalloons,
   DistinctSubsequences,
@@ -125,8 +130,8 @@ import {
   SetMatrixZeroes,
   Pow,
   MultiplyString,
-  DetectSquares,
 } from "./problems/Math";
+import { InvertBinaryTree } from "./problems/Tree";
 interface ProblemMap {
   [key: string]: Problem;
 }
@@ -223,10 +228,8 @@ export const problems: ProblemMap = {
   "best-time-to-buy-and-sell-stock-with-cooldown":
     BestTimeToBuyAndSellStockWithCooldown,
   "coin-change-2": CoinChange2,
-  "target-sum": TargetSum,
   "interleaving-string": InterLeavingString,
   "edit-distance": EditDistance,
-  "longest-increasing-path-in-a-matrix": LongestIncreasingPathInAMatrix,
   "burst-balloons": BurstBalloons,
   "distinct-subsequences": DistinctSubsequences,
   "regular-expression-matching": RegularExpressionMatching,
@@ -237,9 +240,9 @@ export const problems: ProblemMap = {
   "set-matrix-zeroes": SetMatrixZeroes,
   pow: Pow,
   "multiply-strings": MultiplyString,
-  "detect-squares": DetectSquares,
+  "linked-list-cycle": LinkedListCycle,
+  "remove-nth-node-from-end-of-list": RemoveNthNodeFromEndOfList,
+  "add-two-numbers": AddTwoNumbers,
+  "find-the-duplicate-number": FindTheDuplicateNumber,
+  "invert-binary-tree": InvertBinaryTree,
 };
-// SetMatrixZeroes,
-// Pow,
-// MultiplyString,
-// DetectSquares,

@@ -5,7 +5,6 @@ import { SpiralMatrix } from "./spiral-matrix";
 import { SetMatrixZeroes } from "./set-matrix-zeroes";
 import { Pow } from "./pow(x,n)";
 import { MultiplyString } from "./multiply-strings";
-import { DetectSquares } from "./detect-squares";
 
 export {
   HappyNumber,
@@ -15,5 +14,4 @@ export {
   SetMatrixZeroes,
   Pow,
   MultiplyString,
-  DetectSquares,
 };

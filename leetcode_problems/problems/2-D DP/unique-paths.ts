@@ -51,28 +51,35 @@ var uniquePaths = function(m, n) {
 
 const solution = {
   solution: `var uniquePaths = function(m, n) {
-
+  let perRow = Array(n).fill(1);
+  // pathCount is 2D array of size m * n
+  let pathCount = Array.from( Array(m).fill( perRow ) );
+    
+  for(let y = 1 ; y < m ; y++){
+    for(let x = 1 ; x < n ; x++){
+      // path count = number of path reach to one step left + number of path reach to one step up
+      pathCount[y][x] = pathCount[y][x-1] + pathCount[y-1][x] 
+    }
+  }  
+  return pathCount[m-1][n-1]
 };`,
-  time_complexity: `n`,
-  space_complexity: `1`,
+  time_complexity: `m * n`,
+  space_complexity: `n`,
 };
 
 // checks if the user has the correct code
 const handle_UniquePaths = (fn: any) => {
   // fn is the callback that user's code is passed into
   try {
-    const nums = [
-      [10, 9, 2, 5, 3, 7, 101, 18],
-      [0, 1, 0, 3, 2, 3],
-      [7, 7, 7, 7, 7, 7, 7],
-    ];
+    const m = [3, 3];
+    const n = [7, 2];
 
-    const answers = [4, 4, 1];
+    const answers = [28, 3];
 
     // loop all tests to check if the user's code is correct
-    for (let i = 0; i < nums.length; i++) {
+    for (let i = 0; i < m.length; i++) {
       // result is the output of the user's function and answer is the expected output
-      const result = fn(nums[i]);
+      const result = fn(m[i], n[i]);
       assert.deepStrictEqual(result, answers[i]);
     }
     return true;

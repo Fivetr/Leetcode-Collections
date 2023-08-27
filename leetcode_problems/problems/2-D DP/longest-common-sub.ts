@@ -58,10 +58,23 @@ var longestCommonSubsequence = function(text1, text2) {
 
 const solution = {
   solution: `var longestCommonSubsequence = function(text1, text2) {
+  let dp = new Array(text1.length+1).fill(null).map(
+    () => new Array(text2.length+1).fill(0)
+  );
 
+  for (let i = 1; i <= text1.length; i++) {
+    for (let j = 1; j <= text2.length; j++) {
+      if (text1[i-1] === text2[j-1]) {
+        dp[i][j] = dp[i-1][j-1] + 1;
+      } else {
+        dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+      }
+    }
+  }
+  return dp[text1.length][text2.length];
 };`,
-  time_complexity: `n`,
-  space_complexity: `1`,
+  time_complexity: `m * n`,
+  space_complexity: `m * n`,
 };
 
 // checks if the user has the correct code
@@ -76,7 +89,7 @@ const handle_LongestCommonSubsequence = (fn: any) => {
     // loop all tests to check if the user's code is correct
     for (let i = 0; i < text1.length; i++) {
       // result is the output of the user's function and answer is the expected output
-      const result = fn(text1[i]);
+      const result = fn(text1[i], text2[i]);
       assert.deepStrictEqual(result, answers[i]);
     }
     return true;

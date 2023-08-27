@@ -53,17 +53,32 @@ var isHappy = function(n) {
 
 const solution = {
   solution: `var isHappy = function(n) {
+  let set = new Set();
+  while (n !== 1 && !set.has(n)) {
+    set.add(n);
+    n = nextNumber(n);
+  }
+  return n === 1;
+}
 
+var nextNumber = function(n) {
+  let newNumber = 0;
+  while (n !== 0) {
+    let num = n % 10;
+    newNumber += num * num;
+    n = Math.floor(n / 10);
+  }
+  return newNumber;
 };`,
-  time_complexity: `n`,
-  space_complexity: `1`,
+  time_complexity: `logn`,
+  space_complexity: `logn`,
 };
 
 // checks if the user has the correct code
 const handle_HappyNumber = (fn: any) => {
   // fn is the callback that user's code is passed into
   try {
-    const n = [9, 2];
+    const n = [19, 2];
 
     const answers = [true, false];
 

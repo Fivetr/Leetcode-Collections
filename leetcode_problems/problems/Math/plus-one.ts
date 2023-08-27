@@ -59,7 +59,16 @@ var plusOne = function(digits) {
 
 const solution = {
   solution: `var plusOne = function(digits) {
-
+  for(let i = digits.length - 1; i >= 0; i--) {
+    if(digits[i] === 9) {
+      digits[i] = 0
+    }
+    else {
+      digits[i] += 1
+      return digits
+    }
+  }
+  return [1, ...digits]
 };`,
   time_complexity: `n`,
   space_complexity: `1`,

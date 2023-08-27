@@ -1,6 +1,10 @@
 import assert from "assert";
 import { Problem } from "@/types/index";
-import { createLinkedList, getListValues } from "@/data_structure/linked_list";
+import {
+  createLinkedList,
+  getListValues,
+  Node,
+} from "@/data_structure/linked_list";
 import img1 from "./images/reverse_list1.jpg";
 import img2 from "./images/reverse_list2.jpg";
 
@@ -34,7 +38,7 @@ const examples = [
 
 const constraints = `
 <li class='mt-3 text-sm'>
-he number of nodes in the list is the range <code>[0, 5000]</code>.
+The number of nodes in the list is the range <code>[0, 5000]</code>.
 </li> 
 <li class='mt-3 text-sm'>
 <code>-5000 ≤ Node.val ≤ 5000</code>
@@ -43,11 +47,17 @@ he number of nodes in the list is the range <code>[0, 5000]</code>.
 
 const starterCode = `/**
 * Definition for singly-linked list.
-* function ListNode(val, next) {
-*     this.val = (val===undefined ? 0 : val)
-*     this.next = (next===undefined ? null : next)
+* export class Node {
+*   public val: number | null;
+*   public next: Node | null;
+*
+*   constructor(value: number | null) {
+*     this.val = value;
+*     this.next = null;
+*   }
 * }
 */
+
 /**
 * @param {ListNode} head
 * @return {ListNode}
@@ -78,12 +88,12 @@ const handle_reverseList = (fn: any) => {
   try {
     const lists = [[1, 2, 3, 4, 5], [5, 4, 3, 2, 1], [1, 2, 3], [1]];
     const answers = [[5, 4, 3, 2, 1], [1, 2, 3, 4, 5], [3, 2, 1], [1]];
-
+    let node = Node;
     // loop all tests to check if the user's code is correct
     for (let i = 0; i < lists.length; i++) {
       // result is the output of the user's function and answer is the expected output
       const list = createLinkedList(lists[i]);
-      const result = fn(list.head);
+      const result = fn(list.head, node);
       assert.deepStrictEqual(getListValues(result), answers[i]);
     }
     return true;
@@ -105,5 +115,6 @@ export const ReverseLinkedList: Problem = {
   starterCode: starterCode,
   solution: solution,
   starterFunctionName: "reverseList(head)",
+  extraParams: "reverseList(head, Node)",
   handlerFunction: handle_reverseList,
 };

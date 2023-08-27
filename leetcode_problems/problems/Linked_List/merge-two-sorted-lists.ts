@@ -1,6 +1,10 @@
 import assert from "assert";
 import { Problem } from "@/types/index";
-import { createLinkedList, getListValues } from "@/data_structure/linked_list";
+import {
+  createLinkedList,
+  getListValues,
+  Node,
+} from "@/data_structure/linked_list";
 import img1 from "./images/merge_list.jpg";
 
 const problemStatement = `
@@ -51,7 +55,7 @@ Both <code>list1</code> and <code>list2</code> are sorted in <strong>non-decreas
 
 const starterCode = `/**
 * Definition for singly-linked list.
-* export class Node {
+* class Node {
 *   public val: number | null;
 *   public next: Node | null;
 *
@@ -61,6 +65,7 @@ const starterCode = `/**
 *   }
 * }
 */
+
 /**
 * @param {ListNode} list1
 * @param {ListNode} list2
@@ -93,14 +98,14 @@ const handle_mergeTwoLists = (fn: any) => {
     const list1s = [[1, 2, 4], [], []];
     const list2s = [[1, 3, 4], [], [0]];
     const answers = [[1, 1, 2, 3, 4, 4], [], [0]];
+    let node = Node;
 
     // loop all tests to check if the user's code is correct
     for (let i = 0; i < list1s.length; i++) {
       // result is the output of the user's function and answer is the expected output
       const list1 = createLinkedList(list1s[i]);
       const list2 = createLinkedList(list2s[i]);
-      const result = fn(list1.head, list2.head);
-      console.log(result);
+      const result = fn(list1.head, list2.head, node);
       assert.deepStrictEqual(getListValues(result), answers[i]);
     }
     return true;
@@ -123,5 +128,6 @@ export const MergeTwoSortedLists: Problem = {
   starterCode: starterCode,
   solution: solution,
   starterFunctionName: "mergeTwoLists(list1, list2)",
+  extraParams: "mergeTwoLists(list1, list2, Node)",
   handlerFunction: handle_mergeTwoLists,
 };

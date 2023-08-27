@@ -19,7 +19,7 @@ Return <em>the maximum coins you can collect by bursting the balloons wisely</em
 const examples = [
   {
     id: 1,
-    inputText: "nnums = [3,1,5,8]",
+    inputText: "nums = [3,1,5,8]",
     outputText: "167",
     explanation:
       "\nnums = [3,1,5,8] --> [3,5,8] --> [3,8] --> [8] --> []\ncoins =  3*1*5    +   3*5*8   +  1*3*8  + 1*8*1 = 167",
@@ -53,10 +53,21 @@ var maxCoins = function(nums) {
 
 const solution = {
   solution: `var maxCoins = function(nums){
-
+  nums.push(1);
+  nums.unshift(1);
+  const dp = [...Array(nums.length)].map(() => Array(nums.length).fill(0)); 
+  for(let windowSize = 1; windowSize < nums.length-1; windowSize++) {
+    for(let start = 1, end = windowSize; end < nums.length-1; end++, start++) {
+      for(let i = start; i <= end; i++) {
+        const coins = dp[start][i-1] + (nums[start-1] * nums[i] * nums[end+1]) + dp[i+1][end];
+        dp[start][end] = Math.max(dp[start][end], coins);
+      }
+    }
+  }
+  return dp[1][nums.length-2]
 };`,
-  time_complexity: `n`,
-  space_complexity: `1`,
+  time_complexity: `n<sup>3</sup>`,
+  space_complexity: `1n<sup>2</sup>`,
 };
 
 // checks if the user has the correct code
@@ -84,7 +95,7 @@ const handle_BurstBalloons = (fn: any) => {
 };
 
 export const BurstBalloons: Problem = {
-  order: 9,
+  order: 7,
   id: "burst-balloons",
   title: "Burst Balloons",
   difficulty: "Hard",

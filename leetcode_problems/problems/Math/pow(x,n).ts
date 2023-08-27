@@ -56,9 +56,22 @@ var myPow = function(x, n) {
 
 const solution = {
   solution: `var myPow = function(x, n) {
-
+  if(n < 0) {
+    x = 1 / x;
+    n = -n;
+  }
+  let result = 1;
+  let current_product = x;
+  while(n > 0) {
+    if(n % 2 == 1) {
+      result = result * current_product;
+    }
+    current_product = current_product * current_product;
+    n = Math.floor(n / 2);
+  }
+  return result;  
 };`,
-  time_complexity: `n`,
+  time_complexity: `logn`,
   space_complexity: `1`,
 };
 
@@ -75,10 +88,14 @@ const handle_Pow = (fn: any) => {
     for (let i = 0; i < x.length; i++) {
       // result is the output of the user's function and answer is the expected output
       const result = fn(x[i], n[i]);
-      assert.deepStrictEqual(result, answers[i]);
+      assert.deepStrictEqual(
+        Math.round(result * 1000) / 1000,
+        Math.round(answers[i] * 1000) / 1000
+      );
     }
     return true;
   } catch (error: any) {
+    console.log(error);
     console.log("Pow handler function error");
     throw new Error(error);
   }

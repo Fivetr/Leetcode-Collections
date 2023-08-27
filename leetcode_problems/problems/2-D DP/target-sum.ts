@@ -79,10 +79,12 @@ const handle_TargetSum = (fn: any) => {
     for (let i = 0; i < nums.length; i++) {
       // result is the output of the user's function and answer is the expected output
       const result = fn(nums[i], targets[i]);
+      console.log(result);
       assert.deepStrictEqual(result, answers[i]);
     }
     return true;
   } catch (error: any) {
+    console.log(error);
     console.log("TargetSum handler function error");
     throw new Error(error);
   }
