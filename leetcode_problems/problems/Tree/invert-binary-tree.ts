@@ -54,6 +54,7 @@ const starterCode = `/**
 *     this.right = null;
 *   }
 * }
+
 /**
 * @param {TreeNode} root
 * @return {TreeNode}
@@ -64,10 +65,19 @@ var invertTree = function(root) {
 
 const solution = {
   solution: `var invertTree = function(root) {
-
+  if(root == null){
+    return root
+  }
+  invertTree(root.left)
+  invertTree(root.right)
+  // swapping process
+  const curr = root.left
+  root.left = root.right
+  root.right = curr
+  return root
 };`,
   time_complexity: `n`,
-  space_complexity: `1`,
+  space_complexity: `n`,
 };
 
 // checks if the user has the correct code

@@ -131,7 +131,22 @@ import {
   Pow,
   MultiplyString,
 } from "./problems/Math";
-import { InvertBinaryTree } from "./problems/Tree";
+import {
+  InvertBinaryTree,
+  MaximumDepthOfBinaryTree,
+  DiameterOfBinaryTree,
+  SameTree,
+  BalancedBinaryTree,
+  SubtreeOfAnotherTree,
+  LowestCommonAncestor,
+  BinaryTreeLevelOrderTraversal,
+  BinaryTreeRightSideView,
+  countGoodNodes,
+  ConstructBinaryTree,
+  BinaryTreeMaximumPath,
+  KthSmallestElementInBST,
+  ValidateBST,
+} from "./problems/Tree";
 interface ProblemMap {
   [key: string]: Problem;
 }
@@ -245,4 +260,18 @@ export const problems: ProblemMap = {
   "add-two-numbers": AddTwoNumbers,
   "find-the-duplicate-number": FindTheDuplicateNumber,
   "invert-binary-tree": InvertBinaryTree,
+  "maximum-depth-of-binary-tree": MaximumDepthOfBinaryTree,
+  "diameter-of-binary-tree": DiameterOfBinaryTree,
+  "balanced-binary-tree": BalancedBinaryTree,
+  "same-tree": SameTree,
+  "subtree-of-another-tree": SubtreeOfAnotherTree,
+  "lowest-common-ancestor-of-a-binary-search-tree": LowestCommonAncestor,
+  "binary-tree-level-order-traversal": BinaryTreeLevelOrderTraversal,
+  "binary-tree-right-side-view": BinaryTreeRightSideView,
+  "count-good-nodes-in-binary-tree": countGoodNodes,
+  "validate-binary-search-tree": ValidateBST,
+  "kth-smallest-element-in-a-bst": KthSmallestElementInBST,
+  "construct-binary-tree-from-preorder-and-inorder-traversal":
+    ConstructBinaryTree,
+  "binary-tree-maximum-path-sum": BinaryTreeMaximumPath,
 };

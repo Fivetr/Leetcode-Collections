@@ -2,7 +2,7 @@
 import { HomeHeader, Footer, LeetCodeProblem } from "@/components";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { firebase_auth } from "@/firebase/firebase";
-import Index from "@/components/temp/index";
+// import Index from "@/components/temp/index";
 import ProblemNavBar from "@/components/ProblemTables/ProblemNavBar";
 import { useState } from "react";
 
@@ -58,7 +58,7 @@ export default function Home() {
             <LeetCodeProblem setLoading={setloading} />
           </table>
         </div>
-        <Index />
+        {/* <Index /> */}
       </main>
       <Footer />
     </>

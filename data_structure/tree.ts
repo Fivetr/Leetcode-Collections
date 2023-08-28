@@ -46,10 +46,11 @@ export function bfs(node: TreeNode | null) {
   if (node === null || node === undefined) return [];
   const queue = [];
   const result = [];
+  let tempNode;
   queue.push(node);
 
   while (queue.length > 0) {
-    const tempNode = queue?.shift();
+    tempNode = queue?.shift();
     result.push(tempNode?.val);
 
     if (tempNode?.left) {
@@ -76,9 +77,22 @@ export function createBinarySearchTree(list: any) {
 export function insertLevelOrder(arr: any, i: number) {
   let root = null;
   if (i < arr.length) {
-    root = new TreeNode(arr[i]);
-    root.left = insertLevelOrder(arr, 2 * i + 1);
-    root.right = insertLevelOrder(arr, 2 * i + 2);
+    if (arr[i] !== null) {
+      root = new TreeNode(arr[i]);
+      root.left = insertLevelOrder(arr, 2 * i + 1);
+      root.right = insertLevelOrder(arr, 2 * i + 2);
+    }
   }
   return root;
+}
+
+export function SearchNode(node: TreeNode | null, key: number) {
+  if (node === null) return;
+  if (node.val === key) return node;
+  console.log(node.val);
+  let var1: any = SearchNode(node.left, key);
+  if (var1 !== undefined && var1.val === key) return var1;
+  let var2: any = SearchNode(node.right, key);
+  if (var2 !== undefined && var2.val === key) return var2;
+  return;
 }
