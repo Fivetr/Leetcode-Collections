@@ -52,7 +52,17 @@ function Register() {
   // display  custom error message
   useEffect(() => {
     if (error) {
-      toast.error(error.message);
+      console.log(error.message);
+      switch (error.message) {
+        case "Firebase: Password should be at least 6 characters (auth/weak-password).":
+          toast.error("Password should be at least 6 characters");
+          break;
+        case "Firebase: Error (auth/email-already-in-use).":
+          toast.error("Email already registered");
+          break;
+        default:
+          toast.error("Invalid Email or Password");
+      }
     }
   }, [error]);
 

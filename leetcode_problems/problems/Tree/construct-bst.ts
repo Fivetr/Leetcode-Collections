@@ -1,12 +1,13 @@
-import { TreeNode, bfs, insertLevelOrder } from "@/data_structure/tree";
+import { TreeNode, bfs } from "@/data_structure/tree";
 import assert from "assert";
 import { Problem } from "@/types/index";
-import img1 from "./images/treerightside.png";
+import img1 from "./images/constructtree1.png";
 
 const problemStatement = `
 <p class='mt-4'>
-Given the <code>root</code> of a binary tree, imagine yourself standing on the <strong>right</strong> side of it, 
-return <em>the values of the nodes you can see ordered from top to bottom</em>.
+Given two integer arrays <code>preorder</code> and <code>inorder</code> where <code>preorder</code> is the preorder traversal 
+of a binary tree and inorder is the <code>inorder</code> traversal of the same tree, construct and 
+return the <em>binary tree</em>.
 </p>
 
 `;
@@ -14,29 +15,39 @@ return <em>the values of the nodes you can see ordered from top to bottom</em>.
 const examples = [
   {
     id: 1,
-    inputText: "root = [1,2,3,null,5,null,4]",
-    outputText: "[1,3,4]",
+    inputText: "preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]",
+    outputText: "[3,9,20,null,null,15,7]",
     img: img1.src,
-    img_size: 400,
+    img_size: 280,
   },
   {
     id: 2,
-    inputText: "root = [1,null,3]",
-    outputText: "[1,3]",
-  },
-  {
-    id: 3,
-    inputText: "root = []",
-    outputText: "[]",
+    inputText: "preorder = [-1], inorder = [-1]",
+    outputText: "[-1]",
   },
 ];
 
 const constraints = `
 <li class='mt-3 text-sm'>
-The number of nodes in the tree is in the range <code>[0, 100]</code>.
+<code>1 ≤ preorder.length ≤ 3000 </code>
 </li> 
 <li class='mt-3 text-sm'>
-<code>-100  ≤ Node.val ≤ 100 </code>
+<code>inorder.length == preorder.length</code>
+</li> 
+<li class='mt-3 text-sm'>
+<code>-3000 ≤ preorder[i], inorder[i] ≤ 3000 </code>
+</li> 
+<li class='mt-3 text-sm'>
+<code>preorder</code> and <code>inorder</code> consist of <strong>unique</strong> values.
+</li> 
+<li class='mt-3 text-sm'>
+Each value of <code>inorder</code> also appears in <code>preorder</code>.
+</li> 
+<li class='mt-3 text-sm'>
+<code>preorder</code> is <strong>guaranteed</strong> to be the preorder traversal of the tree.
+</li> 
+<li class='mt-3 text-sm'>
+<code>inorder</code> is <strong>guaranteed</strong> to be the inorder traversal of the tree.
 </li> 
 `;
 
@@ -55,24 +66,17 @@ const starterCode = `/**
 * }
 
 /**
- * @param {TreeNode} root
- * @return {number[]}
+ * @param {number[]} preorder
+ * @param {number[]} inorder
+ * @return {TreeNode}
  */
-var rightSideView = function(root) {
+var buildTree = function(preorder, inorder) {
     
 };`;
 
 const solution = {
-  solution: `var rightSideView = function(root) {
-    const res = []
-    function traverse(node, level) {
-        if (node?.val === undefined) return null
-        res[level] = node.val
-        traverse(node.left, level + 1)
-        traverse(node.right, level + 1)
-    }
-    traverse(root, 0)
-    return res
+  solution: `var buildTree = function(preorder, inorder) {
+
 };`,
   time_complexity: `n`,
   space_complexity: `n`,
@@ -82,17 +86,17 @@ const solution = {
 const handle_ConstructBinaryTree = (fn: any) => {
   // fn is the callback that user's code is passed into
   try {
-    const root = [[1, 2, 3, null, 5, null, 4], [1, null, 3], []];
-    const answers = [[1, 3, 4], [1, 3], []];
+    const preorders = [[3, 9, 20, 15, 7], [1, null, 3], [1]];
+    const inorders = [[9, 3, 15, 20, 7], [1]];
+    const answers = [[3, 9, 20, 15, 7], [1]];
     let node = TreeNode;
 
     // loop all tests to check if the user's code is correct
-    for (let i = 0; i < root.length; i++) {
+    for (let i = 0; i < preorders.length; i++) {
       // result is the output of the user's function and answer is the expected output
-      const root_ = insertLevelOrder(root[i], 0);
-      const result = fn(root_, node);
-      console.log(result);
-      assert.deepStrictEqual(result, answers[i]);
+      const result = fn(preorders[i], inorders[i], node);
+      console.log(bfs(result));
+      assert.deepStrictEqual(bfs(result), answers[i]);
     }
     return true;
   } catch (error: any) {
@@ -113,7 +117,7 @@ export const ConstructBinaryTree: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "rightSideView(root)",
-  extraParams: "rightSideView(root, TreeNode)",
+  starterFunctionName: "buildTree(preorder, inorder)",
+  extraParams: "buildTree(preorder, inorder, TreeNode)",
   handlerFunction: handle_ConstructBinaryTree,
 };

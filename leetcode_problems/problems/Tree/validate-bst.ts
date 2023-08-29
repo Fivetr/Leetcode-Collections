@@ -1,12 +1,24 @@
-import { TreeNode, bfs, insertLevelOrder } from "@/data_structure/tree";
+import { TreeNode, insertLevelOrder } from "@/data_structure/tree";
 import assert from "assert";
 import { Problem } from "@/types/index";
-import img1 from "./images/treerightside.png";
+import img1 from "./images/validate1.png";
+import img2 from "./images/validate2.png";
 
 const problemStatement = `
 <p class='mt-4'>
-Given the <code>root</code> of a binary tree, imagine yourself standing on the <strong>right</strong> side of it, 
-return <em>the values of the nodes you can see ordered from top to bottom</em>.
+Given the <code>root</code> of a binary tree, <em>determine if it is a valid binary search tree (BST)</em>.
+</p>
+<p class='mt-4'>
+A <strong>valid BST</strong> is defined as follows:
+</p>
+<p class='mt-4'>
+The left subtree of a node contains only nodes with keys <strong>less than</strong> the node's key.
+</p>
+<p class='mt-4'>
+The right subtree of a node contains only nodes with keys <strong>greater than</strong> the node's key.
+</p>
+<p class='mt-4'>
+Both the left and right subtrees must also be binary search trees.
 </p>
 
 `;
@@ -14,29 +26,27 @@ return <em>the values of the nodes you can see ordered from top to bottom</em>.
 const examples = [
   {
     id: 1,
-    inputText: "root = [1,2,3,null,5,null,4]",
-    outputText: "[1,3,4]",
+    inputText: "root = [2,1,3]",
+    outputText: "true",
     img: img1.src,
-    img_size: 400,
+    img_size: 300,
   },
   {
     id: 2,
-    inputText: "root = [1,null,3]",
-    outputText: "[1,3]",
-  },
-  {
-    id: 3,
-    inputText: "root = []",
-    outputText: "[]",
+    inputText: "root = [5,1,4,null,null,3,6]",
+    outputText: "false",
+    img: img2.src,
+    img_size: 370,
+    explanation: "The root node's value is 5 but its right child's value is 4.",
   },
 ];
 
 const constraints = `
 <li class='mt-3 text-sm'>
-The number of nodes in the tree is in the range <code>[0, 100]</code>.
+The number of nodes in the tree is in the range <code>[0, 10<sup>4</sup>]</code>.
 </li> 
 <li class='mt-3 text-sm'>
-<code>-100  ≤ Node.val ≤ 100 </code>
+<code>-2<sup>31</sup>  ≤ Node.val ≤ 2<sup>31</sup> - 1 </code>
 </li> 
 `;
 
@@ -56,24 +66,34 @@ const starterCode = `/**
 
 /**
  * @param {TreeNode} root
- * @return {number[]}
+ * @return {boolean}
  */
-var rightSideView = function(root) {
+var isValidBST = function(root) {
     
 };`;
 
 const solution = {
-  solution: `var rightSideView = function(root) {
-    const res = []
-    function traverse(node, level) {
-        if (node?.val === undefined) return null
-        res[level] = node.val
-        traverse(node.left, level + 1)
-        traverse(node.right, level + 1)
-    }
-    traverse(root, 0)
-    return res
-};`,
+  solution: `var isValidBST = function (root) {
+  return validate(root, -Infinity, Infinity);
+};
+  
+var validate = function (node, lower, upper) {
+  if (node === null) {
+    // empty node or empty tree
+    return true;
+  }
+  if (lower < node.val && node.val < upper) {
+    // check if all tree nodes follow BST rule
+    return (
+      validate(node.left, lower, node.val) &&
+      validate(node.right, node.val, upper)
+    );
+  } else {
+    // early reject when we find violation
+    return false;
+  }
+};
+`,
   time_complexity: `n`,
   space_complexity: `n`,
 };
@@ -82,8 +102,11 @@ const solution = {
 const handle_ValidateBST = (fn: any) => {
   // fn is the callback that user's code is passed into
   try {
-    const root = [[1, 2, 3, null, 5, null, 4], [1, null, 3], []];
-    const answers = [[1, 3, 4], [1, 3], []];
+    const root = [
+      [2, 1, 3],
+      [5, 1, 4, null, null, 3, 6],
+    ];
+    const answers = [true, false];
     let node = TreeNode;
 
     // loop all tests to check if the user's code is correct
@@ -113,7 +136,7 @@ export const ValidateBST: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "rightSideView(root)",
-  extraParams: "rightSideView(root, TreeNode)",
+  starterFunctionName: "isValidBST(root)",
+  extraParams: "isValidBST(root, TreeNode)",
   handlerFunction: handle_ValidateBST,
 };

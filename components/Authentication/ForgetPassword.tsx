@@ -26,7 +26,6 @@ function ForgetPassword() {
       switch (error.message) {
         case "Firebase: Error (auth/user-not-found).":
           toast.error("User Not Found");
-
           break;
         case "Firebase: Error (auth/invalid-email).":
           toast.error("Invalid Email");

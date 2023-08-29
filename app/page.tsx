@@ -4,11 +4,14 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { firebase_auth } from "@/firebase/firebase";
 // import Index from "@/components/temp/index";
 import ProblemNavBar from "@/components/ProblemTables/ProblemNavBar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useHasMounted } from "@/hooks/useHasMounted";
 
 export default function Home() {
   const [user] = useAuthState(firebase_auth);
   const [loading, setloading] = useState(true);
+  if (!useHasMounted) return null;
+
   return (
     // problem navigation page
     <>

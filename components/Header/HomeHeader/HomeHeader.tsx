@@ -88,7 +88,7 @@ function HomeHeader({ problemPage, problemId }: HomeHeaderPros) {
             </div>
           ) : (
             <button
-              className="btn text-sm hover:scale-105"
+              className="inline-block cursor-pointer rounded-md border-2 border-cyan-300 bg-cyan-200 px-3 py-1 text-center text-sm font-semibold no-underline duration-500 hover:scale-105 hover:bg-cyan-400"
               onClick={() => signOut()}
             >
               Log Out

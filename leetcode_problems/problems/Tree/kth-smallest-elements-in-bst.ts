@@ -1,12 +1,13 @@
-import { TreeNode, bfs, insertLevelOrder } from "@/data_structure/tree";
+import { TreeNode, insertLevelOrder } from "@/data_structure/tree";
 import assert from "assert";
 import { Problem } from "@/types/index";
-import img1 from "./images/treerightside.png";
+import img1 from "./images/kthSmallestelement1.png";
+import img2 from "./images/kthSmallestelement2.png";
 
 const problemStatement = `
 <p class='mt-4'>
-Given the <code>root</code> of a binary tree, imagine yourself standing on the <strong>right</strong> side of it, 
-return <em>the values of the nodes you can see ordered from top to bottom</em>.
+Given the <code>root</code> of a binary search tree, and an integer <code>k</code>, return the <code>k<sup>th</sup></code> <em>smallest value 
+<strong>(1-indexed)</strong> of all the values of the nodes in the tree</em>.
 </p>
 
 `;
@@ -14,29 +15,29 @@ return <em>the values of the nodes you can see ordered from top to bottom</em>.
 const examples = [
   {
     id: 1,
-    inputText: "root = [1,2,3,null,5,null,4]",
-    outputText: "[1,3,4]",
+    inputText: "root = [3,1,4,null,2], k = 1",
+    outputText: "1",
     img: img1.src,
-    img_size: 400,
+    img_size: 210,
   },
   {
     id: 2,
-    inputText: "root = [1,null,3]",
-    outputText: "[1,3]",
-  },
-  {
-    id: 3,
-    inputText: "root = []",
-    outputText: "[]",
+    inputText: "root = [5,3,6,2,4,null,null,1], k = 3",
+    outputText: "3",
+    img: img2.src,
+    img_size: 380,
   },
 ];
 
 const constraints = `
 <li class='mt-3 text-sm'>
-The number of nodes in the tree is in the range <code>[0, 100]</code>.
+The number of nodes in the tree is <code>n</code>.
 </li> 
 <li class='mt-3 text-sm'>
-<code>-100  ≤ Node.val ≤ 100 </code>
+<code>1 ≤ k ≤ n ≤ 10<sup>4</sup> </code>
+</li> 
+<li class='mt-3 text-sm'>
+<code>0 ≤ Node.val ≤ 10<sup>4</sup> </code>
 </li> 
 `;
 
@@ -56,23 +57,28 @@ const starterCode = `/**
 
 /**
  * @param {TreeNode} root
- * @return {number[]}
+ * @param {number} k
+ * @return {number}
  */
-var rightSideView = function(root) {
+var kthSmallest = function(root, k) {
     
 };`;
 
 const solution = {
-  solution: `var rightSideView = function(root) {
-    const res = []
-    function traverse(node, level) {
-        if (node?.val === undefined) return null
-        res[level] = node.val
-        traverse(node.left, level + 1)
-        traverse(node.right, level + 1)
+  solution: `var kthSmallest = function(root, k) {
+  let n = 0
+  let stack = []
+  let current = root
+  while (current || stack.length > 0) {
+    while (current) {
+      stack.push(current)
+      current = current.left
     }
-    traverse(root, 0)
-    return res
+    current = stack.pop()
+    n += 1
+    if (n === k) return current.val
+    current = current.right
+  }
 };`,
   time_complexity: `n`,
   space_complexity: `n`,
@@ -82,15 +88,19 @@ const solution = {
 const handle_KthSmallestElementInBST = (fn: any) => {
   // fn is the callback that user's code is passed into
   try {
-    const root = [[1, 2, 3, null, 5, null, 4], [1, null, 3], []];
-    const answers = [[1, 3, 4], [1, 3], []];
+    const root = [
+      [3, 1, 4, null, 2],
+      [5, 3, 6, 2, 4, null, null, 1],
+    ];
+    const k = [1, 3];
+    const answers = [1, 3];
     let node = TreeNode;
 
     // loop all tests to check if the user's code is correct
     for (let i = 0; i < root.length; i++) {
       // result is the output of the user's function and answer is the expected output
       const root_ = insertLevelOrder(root[i], 0);
-      const result = fn(root_, node);
+      const result = fn(root_, k[i], node);
       console.log(result);
       assert.deepStrictEqual(result, answers[i]);
     }
@@ -113,7 +123,7 @@ export const KthSmallestElementInBST: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "rightSideView(root)",
-  extraParams: "rightSideView(root, TreeNode)",
+  starterFunctionName: "kthSmallest(root,k)",
+  extraParams: "kthSmallest(root,k,TreeNode)",
   handlerFunction: handle_KthSmallestElementInBST,
 };
