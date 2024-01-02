@@ -123,7 +123,7 @@ const handle_findMedianSortedArrays = (fn: any) => {
 };
 
 export const MedianOfTwoSortedArrays: Problem = {
-  order: 6,
+  order: 9,
   id: "median-of-two-sorted-arrays",
   title: "Median of Two Sorted Arrays",
   difficulty: "Hard",

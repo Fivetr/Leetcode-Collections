@@ -6,6 +6,7 @@ import { firebase_auth } from "@/firebase/firebase";
 import ProblemNavBar from "@/components/ProblemTables/ProblemNavBar";
 import { useState, useEffect } from "react";
 import { useHasMounted } from "@/hooks/useHasMounted";
+import Index from "@/components/temp";
 
 export default function Home() {
   const [user] = useAuthState(firebase_auth);

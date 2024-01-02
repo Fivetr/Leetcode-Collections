@@ -31,6 +31,9 @@ import {
   FindMinimumInRotatedSortedArray,
   SearchInRotatedSortedArray,
   MedianOfTwoSortedArrays,
+  FindPeakElement,
+  FindFirstAndLastPositionOfElementInSortedArray,
+  KthSmallestElementInASortedMatrix,
 } from "./problems/Binary_Search";
 import {
   BestTimeToBuyAndSellStock,
@@ -274,4 +277,8 @@ export const problems: ProblemMap = {
   "construct-binary-tree-from-preorder-and-inorder-traversal":
     ConstructBinaryTree,
   "binary-tree-maximum-path-sum": BinaryTreeMaximumPath,
+  "find-peak-element": FindPeakElement,
+  "find-first-and-last-position-of-element-in-sorted-array":
+    FindFirstAndLastPositionOfElementInSortedArray,
+  "kth-smallest-element-in-a-sorted-matrix": KthSmallestElementInASortedMatrix,
 };
