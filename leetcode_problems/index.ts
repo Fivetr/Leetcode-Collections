@@ -16,6 +16,10 @@ import {
   DailyTemperatures,
   CarFleet,
   LargestRectangleinHistogram,
+  AsteroidCollision,
+  DecodeString,
+  SimplifyPath,
+  RemovingStarsFromAString,
 } from "./problems/Stack";
 import {
   ValidPalindrome,
@@ -281,4 +285,8 @@ export const problems: ProblemMap = {
   "find-first-and-last-position-of-element-in-sorted-array":
     FindFirstAndLastPositionOfElementInSortedArray,
   "kth-smallest-element-in-a-sorted-matrix": KthSmallestElementInASortedMatrix,
+  "asteroid-collision": AsteroidCollision,
+  "decode-string": DecodeString,
+  "simplify-path": SimplifyPath,
+  "removing-stars-from-a-string": RemovingStarsFromAString,
 };

@@ -101,7 +101,7 @@ const handle_LargestRectangleArea = (fn: any) => {
 };
 
 export const LargestRectangleinHistogram: Problem = {
-  order: 6,
+  order: 10,
   id: "largest-rectangle-in-histogram",
   title: "Largest Rectangle in Histogram",
   difficulty: "Hard",
