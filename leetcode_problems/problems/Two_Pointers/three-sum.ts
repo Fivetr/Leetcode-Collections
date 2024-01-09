@@ -129,7 +129,7 @@ const handle_threeSum = (fn: any) => {
 };
 
 export const ThreeSum: Problem = {
-  order: 3,
+  order: 5,
   id: "three-sum",
   title: "Three Sum",
   difficulty: "Medium",

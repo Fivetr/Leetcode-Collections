@@ -100,7 +100,7 @@ const handle_maxProfit = (fn: any) => {
 };
 
 export const BestTimeToBuyAndSellStock2: Problem = {
-  order: 2,
+  order: 4,
   id: "best-time-to-buy-and-sell-stock-2",
   title: "Best Time to Buy and Sell Stock 2",
   difficulty: "Medium",

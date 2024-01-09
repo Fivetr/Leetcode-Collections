@@ -123,7 +123,7 @@ const handle_minWindow = (fn: any) => {
 };
 
 export const MinimumWindowSubstring: Problem = {
-  order: 6,
+  order: 14,
   id: "minimum-window-substring",
   title: "Minimum Window Substring",
   difficulty: "Hard",

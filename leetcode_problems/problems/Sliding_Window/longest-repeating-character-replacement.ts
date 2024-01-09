@@ -108,7 +108,7 @@ const handle_characterReplacement = (fn: any) => {
 };
 
 export const LongestRepeatingCharacterReplacement: Problem = {
-  order: 4,
+  order: 6,
   id: "longest-repeating-character-replacement",
   title: "Longest Repeating Character Replacement",
   difficulty: "Medium",

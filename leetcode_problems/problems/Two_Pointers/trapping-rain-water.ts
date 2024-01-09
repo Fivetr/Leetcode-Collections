@@ -93,7 +93,7 @@ const handle_trap = (fn: any) => {
 };
 
 export const TrappingRainWater: Problem = {
-  order: 5,
+  order: 8,
   id: "trapping-rain-water",
   title: "Trapping Rain Water",
   difficulty: "Hard",

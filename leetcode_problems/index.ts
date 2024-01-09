@@ -27,6 +27,9 @@ import {
   ThreeSum,
   ContainerWithMostWater,
   TrappingRainWater,
+  IsSubsequence,
+  SquaresOfASortedArray,
+  ThreeSumClosest,
 } from "./problems/Two_Pointers";
 import {
   BinarySearch,
@@ -47,6 +50,8 @@ import {
   MinimumWindowSubstring,
   SlidingWindowMaximum,
   BestTimeToBuyAndSellStock2,
+  ContainsDuplicate2,
+  MaximumAverageSubarray,
 } from "./problems/Sliding_Window";
 import {
   ReverseLinkedList,
@@ -289,4 +294,9 @@ export const problems: ProblemMap = {
   "decode-string": DecodeString,
   "simplify-path": SimplifyPath,
   "removing-stars-from-a-string": RemovingStarsFromAString,
+  "is-subsequence": IsSubsequence,
+  "squares-of-a-sorted-array": SquaresOfASortedArray,
+  "3sum-closest": ThreeSumClosest,
+  "contains-duplicate-2": ContainsDuplicate2,
+  "maximum-average-subarray": MaximumAverageSubarray,
 };

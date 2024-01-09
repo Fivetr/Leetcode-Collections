@@ -104,7 +104,7 @@ const handle_checkInclusion = (fn: any) => {
 };
 
 export const PermutationInString: Problem = {
-  order: 5,
+  order: 7,
   id: "permutation-in-string",
   title: "Permutation in String",
   difficulty: "Medium",

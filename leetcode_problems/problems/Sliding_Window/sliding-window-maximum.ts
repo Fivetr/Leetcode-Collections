@@ -98,7 +98,7 @@ const handle_maxSlidingWindow = (fn: any) => {
 };
 
 export const SlidingWindowMaximum: Problem = {
-  order: 7,
+  order: 15,
   id: "sliding-window-maximum",
   title: "Sliding Window Maximum",
   difficulty: "Hard",

@@ -93,7 +93,7 @@ const handle_lengthOfLongestSubstring = (fn: any) => {
 };
 
 export const LongestSubstringWithoutRepeatingCharacters: Problem = {
-  order: 3,
+  order: 5,
   id: "longest-substring-without-repeating-characters",
   title: "Longest Substring Without Repeating Characters",
   difficulty: "Medium",

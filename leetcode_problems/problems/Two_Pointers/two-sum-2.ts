@@ -128,7 +128,7 @@ const handle_twoSum = (fn: any) => {
 };
 
 export const TwoSum2: Problem = {
-  order: 2,
+  order: 4,
   id: "two-sum-2",
   title: "Two Sum II - Input Array Is Sorted  ",
   difficulty: "Medium",

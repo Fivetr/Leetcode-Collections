@@ -107,7 +107,7 @@ const handle_maxArea = (fn: any) => {
 };
 
 export const ContainerWithMostWater: Problem = {
-  order: 4,
+  order: 7,
   id: "container-with-most-water",
   title: "Container With Most Water",
   difficulty: "Medium",
