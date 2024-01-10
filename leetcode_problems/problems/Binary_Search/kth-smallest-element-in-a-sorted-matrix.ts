@@ -3,80 +3,84 @@ import { Problem } from "@/types/index";
 
 const problemStatement = `
 <p class='mt-4'>
-Given an array of integers <code>nums</code> sorted in non-decreasing order, 
-find the starting and ending position of a given <code>target</code> value.
+Given an <code>n x n</code> <code>matrix</code> where each of the rows and columns is sorted in ascending order, 
+return the <code>k<sup>th</sup></code> smallest element in the matrix.
 </p>
 <p class='mt-4'>
-If <code>target</code> is not found in the array, <code>return [-1, -1]</code>.
+Note that it is the <code>k<sup>th</sup></code> smallest element <strong>in the sorted order</strong>, 
+not the <code>k<sup>th</sup></code> <strong>distinct</strong> element.
 </p>
 <p class='mt-4'>
-You must write an algorithm with <code>O(log n)</code> runtime complexity.
+You must find a solution with a memory complexity better than <code>O(n<sup>2</sup>)</code>.
 </p>
 `;
 
 const examples = [
   {
     id: 1,
-    inputText: "nums = [5,7,7,8,8,10, target = 8",
-    outputText: "[3,4]",
+    inputText: "matrix = [[1,5,9],[10,11,13],[12,13,15]], k = 8",
+    outputText: "13",
+    explanation:
+      "The elements in the matrix are [1,5,9,10,11,12,13,13,15], and the 8th smallest number is 13",
   },
   {
     id: 2,
-    inputText: "nums = [5,7,7,8,8,10], target = 6",
-    outputText: "[-1,-1]",
-  },
-  {
-    id: 3,
-    inputText: "nums = [], target = 0",
-    outputText: "[-1,-1]",
+    inputText: "matrix = [[-5]], k = 1",
+    outputText: "-5",
   },
 ];
 
 const constraints = `
 <li class='mt-3 text-sm'>
-<code>0 ≤ nums.length ≤ 10<sup>5</sup></code>
+<code>n == matrix.length == matrix[i].length</code>
 </li> 
 <li class='mt-3 text-sm'>
-<code>-10<sup>9</sup> ≤ nums[i] ≤ 10<sup>9</sup></code>
+<code>1 <= n <= 300</code>
 </li> 
 <li class='mt-3 text-sm'>
-<code>nums</code> is a non-decreasing array.
+<code>-10<sup>9</sup> <= matrix[i][j] <= 10<sup>9</sup></code>
 </li> 
 <li class='mt-3 text-sm'>
-<code>-10<sup>9</sup> ≤ target ≤ 10<sup>9</sup></code>
+All the rows and columns of matrix are guaranteed to be sorted in <strong>non-decreasing order</strong>.
+</li> 
+<li class='mt-3 text-sm'>
+<code>1 <= k <= n<sup>2</sup></code>
 </li> 
 `;
 
 const starterCode = `/**
-* @param {number[]} nums
-* @param {number} target
-* @return {number[]}
+* @param {number[][]} matrix
+* @param {number} k
+* @return {number}
 */
-var searchRange = function(nums, target) {
+var kthSmallest = function(matrix, k) {
 
 };`;
 
 const solution = {
-  solution: `var searchRange = function(nums, target) {
-    const search = (first) =>{
-        let l = 0, r = nums.length - 1
-        let i = -1
-        while(l <= r){
-            let m = Math.floor((l + r)/2)
-            if(nums[m] > target) r = m - 1
-            else if(nums[m] < target) l = m + 1
-            else {
-                i = m
-                if(first){
-                    r = m - 1
-                }else l = m + 1
+  solution: `var kthSmallest = function(matrix, k) {
+    const Count = (m) => {
+        let r = matrix.length - 1
+        let c = 0
+        let count = 0
+        while(r >= 0 && c < matrix[0].length){
+            if(matrix[r][c] <= m){
+                count += r + 1
+                c++
             }
+            else r--
         }
-        return i
+        return count
     }
-    const first = search(true)
-    const last = search(false)
-    return [first, last]
+    let l = matrix[0][0]
+    let r = matrix[matrix.length-1][matrix[0].length - 1]
+    while(l < r){
+        let m = Math.floor((l + r)/2)
+        let count = Count(m)
+        if(count < k) l = m + 1
+        else r = m
+    }
+    return l
 };`,
   time_complexity: `logn`,
   space_complexity: `1`,
@@ -86,17 +90,21 @@ const solution = {
 const handle_search = (fn: any) => {
   // fn is the callback that user's code is passed into
   try {
-    const nums = [
-      [1, 2, 3, 1],
-      [1, 2, 1, 3, 5, 6, 4],
+    const matrix = [
+      [
+        [1, 5, 9],
+        [10, 11, 13],
+        [12, 13, 15],
+      ],
+      [[-5]],
     ];
-
-    const answers = [2, 5];
+    const k = [8, 1];
+    const answers = [13, -5];
 
     // loop all tests to check if the user's code is correct
-    for (let i = 0; i < nums.length; i++) {
+    for (let i = 0; i < matrix.length; i++) {
       // result is the output of the user's function and answer is the expected output
-      const result = fn(nums[i]);
+      const result = fn(matrix[i], k[i]);
       console.log(result);
       assert.deepStrictEqual(result, answers[i]);
     }
@@ -118,6 +126,6 @@ export const KthSmallestElementInASortedMatrix: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "searchRange(nums)",
+  starterFunctionName: "kthSmallest(matrix, k)",
   handlerFunction: handle_search,
 };

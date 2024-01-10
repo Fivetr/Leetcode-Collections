@@ -17,7 +17,7 @@ You must write an algorithm with <code>O(log n)</code> runtime complexity.
 const examples = [
   {
     id: 1,
-    inputText: "nums = [5,7,7,8,8,10, target = 8",
+    inputText: "nums = [5,7,7,8,8,10], target = 8",
     outputText: "[3,4]",
   },
   {
@@ -86,17 +86,19 @@ const solution = {
 const handle_search = (fn: any) => {
   // fn is the callback that user's code is passed into
   try {
-    const nums = [
-      [1, 2, 3, 1],
-      [1, 2, 1, 3, 5, 6, 4],
-    ];
+    const nums = [[5, 7, 7, 8, 8, 10], [5, 7, 7, 8, 8, 10], []];
+    const target = [8, 6, 0];
 
-    const answers = [2, 5];
+    const answers = [
+      [3, 4],
+      [-1, -1],
+      [-1, -1],
+    ];
 
     // loop all tests to check if the user's code is correct
     for (let i = 0; i < nums.length; i++) {
       // result is the output of the user's function and answer is the expected output
-      const result = fn(nums[i]);
+      const result = fn(nums[i], target[i]);
       console.log(result);
       assert.deepStrictEqual(result, answers[i]);
     }
@@ -118,6 +120,6 @@ export const FindFirstAndLastPositionOfElementInSortedArray: Problem = {
   constraints: constraints,
   starterCode: starterCode,
   solution: solution,
-  starterFunctionName: "searchRange(nums)",
+  starterFunctionName: "searchRange(nums, target)",
   handlerFunction: handle_search,
 };

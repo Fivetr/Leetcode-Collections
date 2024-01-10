@@ -64,7 +64,7 @@ const solution = {
         else return m
     }
 };`,
-  time_complexity: `logn`,
+  time_complexity: `nlogn`,
   space_complexity: `1`,
 };
 
