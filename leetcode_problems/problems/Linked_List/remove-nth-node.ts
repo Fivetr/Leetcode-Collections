@@ -113,7 +113,7 @@ const handle_RemoveNthNodeFromEndOfList = (fn: any) => {
 };
 
 export const RemoveNthNodeFromEndOfList: Problem = {
-  order: 4,
+  order: 8,
   id: "remove-nth-node-from-end-of-list",
   title: "Remove Nth Node From End of List",
   difficulty: "Medium",

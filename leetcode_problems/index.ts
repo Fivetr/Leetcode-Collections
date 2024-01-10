@@ -66,6 +66,11 @@ import {
   RemoveNthNodeFromEndOfList,
   AddTwoNumbers,
   FindTheDuplicateNumber,
+  MiddleOfTheLinkedList,
+  RemoveDuplicatesFromSortedList,
+  RemoveLinkedListElement,
+  PalindromeLinkedList,
+  ReverseLinkedList2,
 } from "./problems/Linked_List";
 import {
   LastStoneWeight,
@@ -313,4 +318,9 @@ export const problems: ProblemMap = {
   "subarray-product-less-than-k": SubarrayProductLessThanK,
   "longest-subarray-of-1's-after-deleting-one-element":
     LongestSubarrayDeletingOneElement,
+  "middle-of-the-linked-list": MiddleOfTheLinkedList,
+  "remove-duplicates-from-sorted-list": RemoveDuplicatesFromSortedList,
+  "remove-linked-list-element": RemoveLinkedListElement,
+  "palindrome-linked-list": PalindromeLinkedList,
+  "reverse-linked-list-2": ReverseLinkedList2,
 };

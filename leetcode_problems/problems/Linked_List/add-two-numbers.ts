@@ -129,7 +129,7 @@ const handle_AddTwoNumbers = (fn: any) => {
 };
 
 export const AddTwoNumbers: Problem = {
-  order: 5,
+  order: 9,
   id: "add-two-numbers",
   title: "Add Two Numbers",
   difficulty: "Medium",

@@ -97,7 +97,7 @@ const handle_FindTheDuplicateNumber = (fn: any) => {
 };
 
 export const FindTheDuplicateNumber: Problem = {
-  order: 6,
+  order: 10,
   id: "find-the-duplicate-number",
   title: "Find the Duplicate Number",
   difficulty: "Medium",
