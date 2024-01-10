@@ -7,7 +7,12 @@ import { SlidingWindowMaximum } from "./sliding-window-maximum";
 import { BestTimeToBuyAndSellStock2 } from "./best-time-to-buy-2";
 import { ContainsDuplicate2 } from "./maximum-average-subarray";
 import { MaximumAverageSubarray } from "./contains-duplicate-2";
-
+import { FruitsIntoBasket } from "./fruits-into-basket";
+import { MinimumSizeSubarraySum } from "./minimum-size-subarray-sum";
+import { MaximumNumberOfVowels } from "./maximum-number-of-vowels";
+import { MaxConsecutiveOnes } from "./max-consecutive-ones-3";
+import { SubarrayProductLessThanK } from "./subarray-product-less-than-k";
+import { LongestSubarrayDeletingOneElement } from "./longest-subarray-of-1-after-deleting-one-element";
 export {
   BestTimeToBuyAndSellStock,
   LongestSubstringWithoutRepeatingCharacters,
@@ -18,4 +23,10 @@ export {
   BestTimeToBuyAndSellStock2,
   ContainsDuplicate2,
   MaximumAverageSubarray,
+  FruitsIntoBasket,
+  MinimumSizeSubarraySum,
+  MaximumNumberOfVowels,
+  MaxConsecutiveOnes,
+  SubarrayProductLessThanK,
+  LongestSubarrayDeletingOneElement,
 };

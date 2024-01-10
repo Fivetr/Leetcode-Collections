@@ -52,6 +52,12 @@ import {
   BestTimeToBuyAndSellStock2,
   ContainsDuplicate2,
   MaximumAverageSubarray,
+  FruitsIntoBasket,
+  MinimumSizeSubarraySum,
+  MaximumNumberOfVowels,
+  MaxConsecutiveOnes,
+  SubarrayProductLessThanK,
+  LongestSubarrayDeletingOneElement,
 } from "./problems/Sliding_Window";
 import {
   ReverseLinkedList,
@@ -299,4 +305,12 @@ export const problems: ProblemMap = {
   "3sum-closest": ThreeSumClosest,
   "contains-duplicate-2": ContainsDuplicate2,
   "maximum-average-subarray": MaximumAverageSubarray,
+  "fruits-into-basket": FruitsIntoBasket,
+  "minimum-size-subarray-sum": MinimumSizeSubarraySum,
+  "maximum-number-of-vowels-in-a-substring-of-given-length":
+    MaximumNumberOfVowels,
+  "max-consecutive-ones-3": MaxConsecutiveOnes,
+  "subarray-product-less-than-k": SubarrayProductLessThanK,
+  "longest-subarray-of-1's-after-deleting-one-element":
+    LongestSubarrayDeletingOneElement,
 };
