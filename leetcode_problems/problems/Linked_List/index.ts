@@ -9,6 +9,11 @@ import { RemoveDuplicatesFromSortedList } from "./remove-duplicates-from-sorted-
 import { RemoveLinkedListElement } from "./remove-linked-list-elements";
 import { PalindromeLinkedList } from "./palindrome-linked-list";
 import { ReverseLinkedList2 } from "./reverse-linked-list-2";
+import { RotateList } from "./rotate-list";
+import { RemoveDuplicatesFromSortedList2 } from "./remove-duplicate-list-2";
+import { DeletetheMiddleNodeofALinkedList } from "./delete-the-middle-node";
+import { MaximumTwinSumofALinkedList } from "./maximum-twin-sum";
+import { OddEvenList } from "./odd-even-list";
 
 export {
   ReverseLinkedList,
@@ -22,4 +27,9 @@ export {
   RemoveLinkedListElement,
   PalindromeLinkedList,
   ReverseLinkedList2,
+  RotateList,
+  RemoveDuplicatesFromSortedList2,
+  DeletetheMiddleNodeofALinkedList,
+  MaximumTwinSumofALinkedList,
+  OddEvenList,
 };

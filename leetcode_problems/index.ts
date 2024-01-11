@@ -71,6 +71,11 @@ import {
   RemoveLinkedListElement,
   PalindromeLinkedList,
   ReverseLinkedList2,
+  RotateList,
+  RemoveDuplicatesFromSortedList2,
+  DeletetheMiddleNodeofALinkedList,
+  MaximumTwinSumofALinkedList,
+  OddEvenList,
 } from "./problems/Linked_List";
 import {
   LastStoneWeight,
@@ -323,4 +328,9 @@ export const problems: ProblemMap = {
   "remove-linked-list-element": RemoveLinkedListElement,
   "palindrome-linked-list": PalindromeLinkedList,
   "reverse-linked-list-2": ReverseLinkedList2,
+  "rotate-list": RotateList,
+  "remove-duplicates-from-sorted-list-2": RemoveDuplicatesFromSortedList2,
+  "delete-the-middle-node-of-a-linked-list": DeletetheMiddleNodeofALinkedList,
+  "maximum-twin-sum-of-a-linked-list": MaximumTwinSumofALinkedList,
+  "odd-even-linked-list": OddEvenList,
 };
